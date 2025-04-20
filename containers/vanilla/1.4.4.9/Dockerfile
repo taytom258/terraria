@@ -2,6 +2,9 @@ FROM ubuntu:plucky
 
 ENV PUID=1000 PGID=1000
 
+EXPOSE 7777/tcp
+EXPOSE 7777/udp
+
 RUN apt update && \
 	apt -y upgrade && \
 	apt -y install unzip wget screen && \
