@@ -27,9 +27,7 @@ if [ "$(id -u)" = 0 ]; then
   chown -R ${runAsUser}:${runAsGroup} /config /opt/terraria
   chmod -R g+w /config
 
-  #trap "su -c 'screen -S terra -p 0 -X stuff 'exit^M'' terraria" TERM
-
-  gosu ${runAsUser}:${runAsGroup} '/opt/terraria/run.sh'
+  gosu ${runAsUser}:${runAsGroup} /opt/terraria/run.sh $@
 
 else
   echo "Setup permission not root! Please utilize ENV variables to set UID/GID."
