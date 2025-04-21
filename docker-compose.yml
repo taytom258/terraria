@@ -8,8 +8,8 @@ services:
       - PGID=1012
       - WORLD=test.wld
     network_mode: "host"
-    tty: true
-    stdin_open: true
+    #tty: true
+    #stdin_open: true
     volumes:
       - /mnt/operation/terraria:/config:z
     pull_policy: always 

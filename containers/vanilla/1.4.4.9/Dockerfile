@@ -7,7 +7,7 @@ EXPOSE 7777/udp
 
 RUN apt update && \
 	apt -y upgrade && \
-	apt -y install unzip gosu screen && \
+	apt -y install unzip screen && \
 	apt clean && \
 	rm -rf /var/lib/apt/lists/*
 
@@ -28,10 +28,9 @@ RUN unzip -q -d /tmp/terraria/ /tmp/terraria/server-1449.zip && \
 	rm -rf /tmp/* /opt/terraria/*.defaultn
 
 COPY --chown=$PUID:$PGID --chmod=750 run.sh /opt/terraria/run.sh
-COPY --chown=$PUID:$PGID --chmod=750 setup.sh /opt/terraria/setup.sh
 
 VOLUME ["/config"]
 
 WORKDIR /opt/terraria/
 
-ENTRYPOINT ["./setup.sh"]
+ENTRYPOINT ["./run.sh"]
