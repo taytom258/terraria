@@ -22,13 +22,14 @@ docker run --rm -it \
 ```
 
 After the initial world generation you can specify the world by specifying the .wld file within an environment variable.
-Remember to set your settings in the serverconfig.txt located within the /config bind mount.
+Remember to set your settings in the serverconfig.txt located within the /config directory.
 
 > [!CAUTION]
 > Try not to run your server in the interactive mode, only use the initial interactive mode to create the world.
 > Running your server interactively disables the autosave on exit functionality. You have been warned!
 
 ## Usage (Headless Daemon Mode)
+Logs are stored within the /config directory
 ```
 docker run --rm \
     -p 7777:7777 \
