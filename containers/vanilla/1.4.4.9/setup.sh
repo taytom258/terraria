@@ -47,7 +47,7 @@ if [ "$(id -u)" = 0 ]; then
   su -c "screen -dmS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'" terraria
 
   trap "su -c 'screen -S terra -p 0 -X stuff 'exit^M'' terraria && echo 'SIGTERM Caught'" SIGTERM
-  while [ ! -e /root/sigterm ]; do sleep 1; done
+  while [ ! -e /root/sigterm ]; do sleep 1 && rm /root/sigterm; done
 
 else
 	echo "Setup permission not root! Please utilize ENV variables to set UID/GID."
