@@ -10,7 +10,7 @@ fi
 
 chmod -R g+w /config
 
-trap 'touch /config/sigterm' SIGTERM
+/bin/bash watchdog.sh &
 
 screen -mS terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt $@
 
