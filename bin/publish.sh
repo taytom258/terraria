@@ -5,7 +5,7 @@ rootdir=/home/ttomlin/development/terraria.container/
 branch=$(git branch --showcurrent)
 
 
-if [ "$branch" -eq "main" ]; then
+if [ "$branch" == "main" ]; then
 	cd $rootdir/containers/vanilla/1.4.4.9
 	podman build -t "taytom259/terraria:vanilla-1.4.4.9" .
 
@@ -16,7 +16,7 @@ if [ "$branch" -eq "main" ]; then
 	podman push docker.io/taytom259/terraria:vanilla-$vlatest
 	podman push docker.io/taytom259/terraria:vanilla-latest
 	podman push docker.io/taytom259/terraria:latest
-elif [ "$branch" -eq "dev" ]; then
+elif [ "$branch" == "dev" ]; then
 	podman build -t "taytom259/terraria:vanilla-1.4.4.9-dev" .
 	podman push docker.io/taytom259/terraria:vanilla-$vlatest-dev
 fi
