@@ -1,12 +1,9 @@
 #!/bin/bash
 
-EffUID="$(id -u)"
-EffGID="$(id -g)"
-
-if [ $EffUID -eq 0 ]; then
+if [ $UID -eq 0 ]; then
 	useradd -m -s /bin/bash -k /etc/ske1/ -u $PUID terraria
 	chown -R terraria:terraria /opt/terraria /config
-	su terraria
+	exec su terraria "$0" -- "$@"
 else
 	echo "Effective startup permissions are not root. Unable to setup proper permissions."
 	exit 1
