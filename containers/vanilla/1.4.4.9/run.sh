@@ -1,8 +1,8 @@
 #!/bin/bash
 
-uid="$(id -u)"
+EffUID="$(id -u)"
 
-if [ $uid -eq 0 ]; then
+if [ $EffUID -eq 0 ]; then
 	useradd -m -s /bin/bash -k /etc/ske1/ -u $PUID terraria
 	chown -R terraria:terraria /opt/terraria /config
 	exec su terraria "$0" -- "$@"
