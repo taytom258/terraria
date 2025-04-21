@@ -45,7 +45,7 @@ if [ "$(id -u)" = 0 ]; then
 
   date=$(date)
   echo "Before screen"
-  su -c "screen -dmS -L -Logfile /config/server.log terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt" terraria
+  screen -dmS -L -Logfile /config/server.log terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt
   echo "After screen"
 
   trap 'touch /root/sigterm' TERM
