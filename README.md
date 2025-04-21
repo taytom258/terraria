@@ -7,7 +7,7 @@ Docker/Podman images available on [Docker Hub](https://hub.docker.com/r/taytom25
 
 Github Repository - [Github](https://github.com/taytom258/terraria-container)
 
-## Usage
+## Usage (Initial Interactive Mode)
 
 Your initial start of the server you will have to create a world. Follow the prompts.
 ```
@@ -15,44 +15,69 @@ docker run --rm -it \
     -p 7777:7777 \
     -e PUID=1000 \
     -e PGID=1000 \
+    -e TZ=America/New_York \
     -v $HOME/terraria/config:/config \
     --name=terraria \
     docker.io/taytom259/terraria:latest
 ```
 
 After the initial world generation you can specify the world by specifying the .wld file within an environment variable.
-> [!NOTE]
-> Make sure you have set your settings within your serverconfig.txt located within the /config bind mount.
+Remember to set your settings in the serverconfig.txt located within the /config directory.
+
+> [!CAUTION]
+> Try not to run your server in the interactive mode, only use the initial interactive mode to create the world.
+> Running your server interactively disables the autosave on exit functionality. You have been warned!
+
+## Usage (Headless Daemon Mode)
+Logs are stored within the /config directory
 ```
-docker run --rm -it \
+docker run --rm \
     -p 7777:7777 \
     -e PUID=1000 \
     -e PGID=1000 \
     -e WORLD=world.wld \
+    -e TZ=America/New_York \
     -v $HOME/terraria/config:/config \
     --name=terraria \
     docker.io/taytom259/terraria:latest
 ```
-> [!CAUTION]
-> The vanilla server does not handle container shutdown properly (WIP). Make sure external tools are autosaving and backing up world files in case of improper container shutdown.
 
 ## Supported tags [taytom259/terraria:###](https://hub.docker.com/r/taytom259/terraria)
-[vanilla-1.4.4.9] [vanilla-latest] [latest] - Vanilla 1.4.4.9
+[vanilla-1.4.4.9] [vanilla-latest] [latest] - Vanilla 1.4.4.9<br/>
+[vanilla-1.4.4.9-dev] - Vanilla 1.4.4.9 Development - Bleeding edge, more than likely broken!
+
+## Docker Compose Example
+```
+name: terraria-container
+
+services:
+  terraria:
+    image: docker.io/taytom259/terraria:latest
+    ports:
+      - "7777:7777"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - WORLD=world.wld
+      - TZ=America/New_York
+    volumes:
+      - $HOME/terraria/config:/config
+```
 
 ## Environment variables
 
 > [!WARNING]
 > The first non-root user within most linux distros is set to 1000 as the UID. This will typically allow you to edit the files produced by this container without issue.
->
 > If you however change the default UID or GID using these environment variables, make sure your user, and also the owner of the bind mount files, are able to access the files.
 
 * `PUID` - User ID of account running server within the container
 * `PGID` - Group ID of account running server within the container
 * `WORLD` - World file name as located within /config
+* `TZ` - Timezone to set for proper log times - [TZ Table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 
 ## Additional Features
 
-### Attaching to server to run commands interactively
+### Attaching to server to run commands (Only available in interactive mode)
 ```
 docker attach terraria
 ```
