@@ -20,7 +20,7 @@ docker run --rm -it \
     docker.io/taytom259/terraria:latest
 ```
 
-After the initial world generation you can specify the world by passing the flag to the server as shown below to run the server without input.
+After the initial world generation you can specify the world by specifying the .wld file within an environment variable.
 > [!NOTE]
 > Make sure you have set your settings within your serverconfig.txt located within the /config bind mount.
 ```
@@ -28,9 +28,10 @@ docker run --rm -it \
     -p 7777:7777 \
     -e PUID=1000 \
     -e PGID=1000 \
+    -e WORLD=world.wld \
     -v $HOME/terraria/config:/config \
     --name=terraria \
-    docker.io/taytom259/terraria:latest -world <world_file_name>.wld
+    docker.io/taytom259/terraria:latest
 ```
 
 ## Supported tags [taytom259/terraria:###](https://hub.docker.com/r/taytom259/terraria)
@@ -45,6 +46,7 @@ docker run --rm -it \
 
 * `PUID` - User ID of account running server within the container
 * `PGID` - Group ID of account running server within the container
+* `WORLD` - World file name as located within /config
 
 ## Additional Features
 
@@ -72,4 +74,4 @@ docker exec -u terraria terraria screen -S terra -p 0 -X stuff "save^M"
 ```
 
 ## Submitting issues/suggestions
-Please submit issues or recommendations within the [issues](https://github.com/taytom258/terraria-container/issues) page.
+Please submit issues or suggestions within the [issues](https://github.com/taytom258/terraria-container/issues) page.
