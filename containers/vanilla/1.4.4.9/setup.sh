@@ -43,7 +43,7 @@ if [ "$(id -u)" = 0 ]; then
 
   #gosu ${runAsUser}:${runAsGroup} /opt/terraria/run.sh "$@"
 
-  date=$(date)
+  date=`date +"%Y-%m-%d-%H%M"`
   su -c "screen -dmS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'" terraria
 
   trap 'touch /root/sigterm' TERM
@@ -52,7 +52,7 @@ if [ "$(id -u)" = 0 ]; then
 	sleep 1
 	((i++))
 	saveTime=$((60*5))
-	if [[ $i -gt $saveTime  ]]; then
+	if [[ $i -gt $saveTime ]]; then
 		su -c 'screen -S terra -p 0 -X stuff 'save^M'' terraria
 		i=0
 	fi
