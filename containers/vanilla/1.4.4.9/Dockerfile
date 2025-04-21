@@ -32,8 +32,6 @@ COPY --chown=$PUID:$PGID --chmod=750 setup.sh /opt/terraria/setup.sh
 
 VOLUME ["/config"]
 
-USER $PUID:$PGID
-
 WORKDIR /opt/terraria/
 
 ENTRYPOINT ["./setup.sh"]
