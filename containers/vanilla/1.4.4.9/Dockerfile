@@ -29,7 +29,6 @@ RUN unzip -q -d /tmp/terraria/ /tmp/terraria/server-1449.zip && \
 
 COPY --chown=$PUID:$PGID --chmod=750 run.sh /opt/terraria/run.sh
 COPY --chown=$PUID:$PGID --chmod=750 setup.sh /opt/terraria/setup.sh
-COPY --chown=$PUID:$PGID --chmod=750 watchdog.sh /opt/terraria/watchdog.sh
 
 VOLUME ["/config"]
 
