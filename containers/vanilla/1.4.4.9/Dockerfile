@@ -13,8 +13,7 @@ RUN apt update && \
 
 RUN mkdir -p /config && \
 	mkdir -p /opt/terraria && \
-	userdel -f ubuntu && \
-	useradd -m -s /bin/bash -k /etc/ske1/ -u $PUID terraria
+	userdel -f ubuntu
 
 RUN mkdir -p /tmp/terraria && \
 	wget -O /tmp/terraria/server-1449.zip \
@@ -29,11 +28,9 @@ RUN mkdir -p /tmp/terraria && \
 	chmod +x /opt/terraria/TerrariaServer* && \
 	rm -rf /tmp/* /opt/terraria/*.defaultn
 
-COPY --chmod=750  --chown=$PUID:$PGID run.sh /opt/terraria/run.sh
+COPY --chmod=750 run.sh /opt/terraria/run.sh
 
 VOLUME ["/config"]
-
-USER $PUID:$PGID
 
 WORKDIR /opt/terraria/
 
