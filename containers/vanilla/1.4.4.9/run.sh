@@ -8,9 +8,7 @@ if [ ! -f "/config/banlist.txt" ]; then
     touch /config/banlist.txt
 fi
 
-chmod -R g+w /config
-
-/bin/bash watchdog.sh &
+/bin/bash -c watchdog.sh &
 
 screen -mS terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt $@
 
