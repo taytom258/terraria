@@ -1,7 +1,7 @@
 #!/bin/bash
 
-EffUID='id -u'
-EffGID='id -g'
+EffUID="$(id -u)"
+EffGID="$(id -g)"
 
 if [ $EffUID -eq 0 ]; then
 	useradd -m -s /bin/bash -k /etc/ske1/ -u $PUID terraria
