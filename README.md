@@ -56,7 +56,7 @@ Example using the 'save' command. "^M" is the Enter character.
 * `screen` - Supervisor application for server
 * `-S terra` - Name of 'session' that server is running under
 * `-p 0` - Grab the first 'screen' from session process
-* `-X stuff "save^M"` - Send screen command of stuff (keyboard emulation) with command of 'save' followed by an Enter charcater (^M)
+* `-X stuff "save^M"` - Send screen command of stuff (keyboard emulation) with command of 'save' followed by an Enter character (^M)
 ```
 docker exec -u terraria terraria screen -S terra -p 0 -X stuff "save^M"
 ```
