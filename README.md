@@ -36,8 +36,8 @@ docker run --rm -it \
 
 ## Environment variables
 
-* PUID - User ID of account running server within the container
-* PGID - Group ID of account running server within the container
+* `PUID` - User ID of account running server within the container
+* `PGID` - Group ID of account running server within the container
 
 ## Additional Features
 
