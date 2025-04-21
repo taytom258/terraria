@@ -43,7 +43,7 @@ docker run --rm \
 ```
 
 ## Supported tags [taytom259/terraria:###](https://hub.docker.com/r/taytom259/terraria)
-[vanilla-1.4.4.9] [vanilla-latest] [latest] - Vanilla 1.4.4.9
+[vanilla-1.4.4.9] [vanilla-latest] [latest] - Vanilla 1.4.4.9<br/>
 [vanilla-1.4.4.9-dev] - Vanilla 1.4.4.9 Development - Bleeding edge, more than likely broken!
 
 ## Docker Compose Example
