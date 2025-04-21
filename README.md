@@ -50,6 +50,13 @@ docker attach terraria
 docker exec -u terraria terraria screen -S terra -p 0 -X stuff "<command here>^M"
 ```
 Example using the 'save' command. "^M" is the Enter character.
+* `exec` - Execute command within container
+* `-u terraria` - User to execute command under
+* `terraria` - Container name/id
+* `screen` - Supervisor application for server
+* `-S terra` - Name of 'session' that server is running under
+* `-p 0` - Grab the first 'screen' from session process
+* `-X stuff "save^M"` - Send screen command of stuff (keyboard emulation) with command of 'save' followed by an Enter charcater (^M)
 ```
 docker exec -u terraria terraria screen -S terra -p 0 -X stuff "save^M"
 ```
