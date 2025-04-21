@@ -13,6 +13,8 @@ Your initial start of the server you will have to create a world. Follow the pro
 ```
 docker run --rm -it \
     -p 7777:7777 \
+    -e PUID=1000 \
+    -e PGID=1000 \
     -v $HOME/terraria/config:/config \
     --name=terraria \
     docker.io/taytom259/terraria:latest
@@ -22,6 +24,8 @@ After the initial world generation you can specify the world by passing the flag
 ```
 docker run --rm -it \
     -p 7777:7777 \
+    -e PUID=1000 \
+    -e PGID=1000 \
     -v $HOME/terraria/config:/config \
     --name=terraria \
     docker.io/taytom259/terraria:latest -world <world_file_name>.wld
@@ -29,6 +33,11 @@ docker run --rm -it \
 
 ## Supported tags [taytom259/terraria:###](https://hub.docker.com/r/taytom259/terraria)
 [vanilla-1.4.4.9] [vanilla-latest] [latest] - Vanilla 1.4.4.9
+
+## Environment variables
+
+* PUID - User ID of account running server within the container
+* PGID - Group ID of account running server within the container
 
 ## Additional Features
 
