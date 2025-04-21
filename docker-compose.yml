@@ -11,5 +11,5 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - /mnt/operation/config:/config:Z
+      - /mnt/operation/terraria:/config:z
     pull_policy: always 
