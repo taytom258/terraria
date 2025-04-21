@@ -1,6 +1,6 @@
 FROM ubuntu:plucky
 
-ENV PUID=1000 PGID=1000
+ENV PUID PGID
 
 EXPOSE 7777/tcp
 EXPOSE 7777/udp
@@ -24,7 +24,6 @@ RUN mkdir -p /tmp/terraria && \
 	sed -in '/#maxplayers=8/c\maxplayers=16' /opt/terraria/serverconfig.default && \
 	sed -in '/#port=7777/c\port=7777' /opt/terraria/serverconfig.default && \
 	sed -in '/#worldpath=C:\\Users\\Defaults\\My Documents\\My Games\\Terraria\\Worlds\\/c\worldpath=/config/' /opt/terraria/serverconfig.default && \
-	chown -R terraria:terraria /opt/terraria /config && \
 	chmod +x /opt/terraria/TerrariaServer* && \
 	rm -rf /tmp/* /opt/terraria/*.defaultn
 
