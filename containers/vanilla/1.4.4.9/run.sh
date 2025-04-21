@@ -42,7 +42,7 @@ chmod -R g+w /config
 echo "Prep Term"
 prep_term
 
-screen -mS terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt $@ &
+screen -mS terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt $@
 
 echo "Wait Term"
 wait_term
