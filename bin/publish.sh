@@ -17,7 +17,7 @@ cd $rootdir
 git add .
 if [ -z "$1" ]
   then
-    git commit -m "Scripted Commit"
+    git commit -m "Scripted commit"
   else
     git commit -m "$1"
 fi
