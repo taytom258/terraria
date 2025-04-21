@@ -10,4 +10,4 @@ fi
 
 chmod -R g+w /config
 
-screen -mS terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt $@
+screen -dmS terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt $@
