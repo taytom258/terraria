@@ -1,12 +1,12 @@
 name: terraria-container
 
-    services:
-        terraria:
+services:
+    terraria:
         image: docker.io/taytom259/terraria:vanilla-1.4.4.9-dev
         environment:
             - PUID=1012
             - PGID=1012
-#            - WORLD=test.wld
+            # - WORLD=test.wld
             - TZ=America/New_York
         network_mode: "host"
         tty: true
