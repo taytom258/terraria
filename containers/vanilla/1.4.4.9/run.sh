@@ -41,12 +41,14 @@ if [ "$(id -u)" = 0 ]; then
   chown -R ${runAsUser}:${runAsGroup} /config /opt/terraria
   chmod -R g+w /config 
 
-  if [ -z "$WORLD" ]; then
-	  gosu ${runAsUser}:${runAsGroup} "screen -mS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'"
-  fi
-
   date=`date +"%Y-%m-%d-%H%M"`
-  su -c "screen -dmS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'" ${runAsUser}
+
+  if [ -z "$WORLD" ]; then
+  	  su -c "screen -mS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'" ${runAsUser}
+	  touch /root/sigterm
+  else
+	  su -c "screen -dmS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'" ${runAsUser}
+  fi
 
   trap "touch /root/sigterm" SIGTERM
   while [ ! -e /root/sigterm ]; do sleep 1; done
