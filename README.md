@@ -1,5 +1,5 @@
 # terraria-container
-Containerized Terraria Server (Vanilla &amp; TShock)
+Containerized Terraria Server (Vanilla &amp; TShock(WIP))
 
 ## Links
 
