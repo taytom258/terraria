@@ -9,7 +9,7 @@ if [ ! -f "/config/banlist.txt" ]; then
 fi
 
 if [[ -v $WORLD  ]]; then
-	screen -mS terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt -world "$WORLD" "$@"
+	screen -mS terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt -world /config/$WORLD "$@"
 else
 	screen -mS terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt "$@"
 fi
