@@ -1,6 +1,6 @@
 #!/bin/bash
 
-uid=$(id -u)
+uid="$(id -u)"
 
 if [ $uid -eq 0 ]; then
 	useradd -m -s /bin/bash -k /etc/ske1/ -u $PUID terraria
