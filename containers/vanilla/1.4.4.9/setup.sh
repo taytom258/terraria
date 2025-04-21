@@ -24,9 +24,7 @@ if [ "$(id -u)" = 0 ]; then
     fi
   fi
 
-  if [[ $(stat -c "%u" /config) != "$PUID" ]]; then
-    chown -R ${runAsUser}:${runAsGroup} /config /opt/terraria
-  fi
+  chown -R ${runAsUser}:${runAsGroup} /config /opt/terraria
 
   gosu ${runAsUser}:${runAsGroup} /opt/terraria/run.sh "$@"
 else
