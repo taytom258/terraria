@@ -10,10 +10,7 @@ fi
 
 chmod -R g+w /config
 
-trap 'touch /config/sigterm' SIGTERM
+trap 'screen -S terra -p 0 -X stuff "exit^M"' SIGTERM
 
 screen -dmS terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt $@
 
-until [ -e /config/sigterm  ]; do sleep 1; done
-rm /config/sigterm
-screen -S terra -p 0 -X stuff "exit^M"
