@@ -8,8 +8,8 @@ if [ ! -f "/config/banlist.txt" ]; then
     touch /config/banlist.txt
 fi
 
-if [ -v $WORLD  ]; then
-	screen -mS terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt -world $WORLD $@
+if [[ -v $WORLD  ]]; then
+	screen -mS terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt -world "$WORLD" "$@"
 else
-	screen -mS terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt $@
+	screen -mS terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt "$@"
 fi

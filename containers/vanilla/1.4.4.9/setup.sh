@@ -27,7 +27,7 @@ if [ "$(id -u)" = 0 ]; then
   chown -R ${runAsUser}:${runAsGroup} /config /opt/terraria
   chmod -R g+w /config
 
-  gosu ${runAsUser}:${runAsGroup} /opt/terraria/run.sh $@
+  gosu ${runAsUser}:${runAsGroup} /opt/terraria/run.sh "$@"
 
 else
   echo "Setup permission not root! Please utilize ENV variables to set UID/GID."
