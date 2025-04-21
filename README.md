@@ -62,6 +62,7 @@ services:
       - TZ=America/New_York
     volumes:
       - $HOME/terraria/config:/config
+    restart: unless-stopped
 ```
 
 ## Environment variables
