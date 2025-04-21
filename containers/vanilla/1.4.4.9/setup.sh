@@ -44,9 +44,7 @@ if [ "$(id -u)" = 0 ]; then
   #gosu ${runAsUser}:${runAsGroup} /opt/terraria/run.sh "$@"
 
   date=$(date)
-  echo "Before screen"
-  su -c 'screen -dmS terra -L -Logfile /config/server.$date.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt $serverARGS' terraria
-  echo "After screen"
+  su -c "screen -dmS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'" terraria
 
   trap 'touch /root/sigterm' TERM
   i=0
