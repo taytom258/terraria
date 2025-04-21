@@ -45,6 +45,8 @@ docker run --rm -it \
 ```
 docker attach terraria
 ```
+To detach press `CTRL-p` then `CTRL-q`
+
 ### Send commands externally to server
 ```
 docker exec -u terraria terraria screen -S terra -p 0 -X stuff "<command here>^M"
