@@ -1,7 +1,6 @@
 FROM ubuntu:plucky
 
 ENV PUID=1000 PGID=1000
-ENV WORLD
 
 EXPOSE 7777/tcp
 EXPOSE 7777/udp
