@@ -1,13 +1,13 @@
 # terraria-container
 Containerized Terraria Server (Vanilla &amp; TShock)
 
-### Links
+## Links
 
 Docker/Podman images avialable on [Docker Hub](https://hub.docker.com/r/taytom259/terraria)
 
 Github Repository - [Github](https://github.com/taytom258/terraria-container)
 
-### Usage
+## Usage
 
 Your initial start of the server you will have to create a world. Follow the prompts.
 ```
@@ -27,16 +27,16 @@ docker run --rm -it \
     docker.io/taytom259/terraria:latest -world <world_file_name>.wld
 ```
 
-### Supported tags [taytom259/terraria:###](https://hub.docker.com/r/taytom259/terraria)
+## Supported tags [taytom259/terraria:###](https://hub.docker.com/r/taytom259/terraria)
 [vanilla-1.4.4.9] [vanilla-latest] [latest] - Vanilla 1.4.4.9
 
-### Additional Features
+## Additional Features
 
-## Attaching to server to run commands interactively
+### Attaching to server to run commands interactively
 ```
 docker attach terraria
 ```
-## Send commands externally to server
+### Send commands externally to server
 ```
 docker exec terraria screen -S terra -p 0 -X stuff "<command here>^M"
 ```
@@ -45,5 +45,5 @@ Example using the 'save' command. "^M" is the Enter character.
 docker exec terraria screen -S terra -p 0 -X stuff "save^M"
 ```
 
-### Submitting issues/suggestions
+## Submitting issues/suggestions
 Please submit issues or recommendations within the [issues](https://github.com/taytom258/terraria-container/issues) page.
