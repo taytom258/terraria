@@ -46,8 +46,11 @@ if [ "$(id -u)" = 0 ]; then
   date=`date +"%Y-%m-%d-%H%M"`
   su -c "screen -dmS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'" terraria
 
-  trap "su -c 'screen -S terra -p 0 -X stuff 'exit^M'' terraria && echo 'SIGTERM Caught'" SIGTERM
-  while [ ! -e /root/sigterm ]; do sleep 1 && rm /root/sigterm; done
+  trap "touch /root/sigterm" SIGTERM
+  while [ ! -e /root/sigterm ]; do sleep 1; done
+  su -c 'screen -S terra -p 0 -X stuff 'exit^M'' terraria
+  echo 'SIGTERM Caught'
+  rm -f /root/sigterm
   exit 0
 
 else
