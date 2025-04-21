@@ -7,20 +7,20 @@ branch=$(git branch --show-current)
 
 if [ "$branch" == "main" ]; then
 	cd $rootdir/containers/vanilla/1.4.4.9
-	podman build -t "taytom259/terraria:vanilla-1.4.4.9" .
+	podman build -t "docker.io/taytom259/terraria:vanilla-1.4.4.9" .
 
 
-	podman tag "taytom259/terraria:vanilla-$vlatest" \
-		taytom259/terraria:vanilla-latest
-	podman tag "taytom259/terraria:vanilla-$vlatest" \
-		taytom259/terraria:latest
+	podman tag "docker.io/taytom259/terraria:vanilla-$vlatest" \
+		docker.io/taytom259/terraria:vanilla-latest
+	podman tag "docker.io/taytom259/terraria:vanilla-$vlatest" \
+		docker.io/taytom259/terraria:latest
 
 	podman push docker.io/taytom259/terraria:vanilla-$vlatest
 	podman push docker.io/taytom259/terraria:vanilla-latest
 	podman push docker.io/taytom259/terraria:latest
 elif [ "$branch" == "dev" ]; then
 	cd $rootdir/containers/vanilla/1.4.4.9
-	podman build -t "taytom259/terraria:vanilla-1.4.4.9-dev" .
+	podman build -t "docker.io/taytom259/terraria:vanilla-1.4.4.9-dev" .
 
 
 	podman push docker.io/taytom259/terraria:vanilla-$vlatest-dev
