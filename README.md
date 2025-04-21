@@ -1,4 +1,4 @@
-# terraria-container
+# Terraria Containerized
 Containerized Terraria Server (Vanilla &amp; TShock(WIP))
 
 ## Links
@@ -20,7 +20,9 @@ docker run --rm -it \
     docker.io/taytom259/terraria:latest
 ```
 
-After the initial world generation you can specify the world by passing the flag to the server as shown below to run the server without input. Make sure you have set your settings within your serverconfig.txt located within the /config bind mount.
+After the initial world generation you can specify the world by passing the flag to the server as shown below to run the server without input.
+> [!NOTE]
+> Make sure you have set your settings within your serverconfig.txt located within the /config bind mount.
 ```
 docker run --rm -it \
     -p 7777:7777 \
@@ -36,6 +38,11 @@ docker run --rm -it \
 
 ## Environment variables
 
+> [!WARNING]
+> The first non-root user within most linux distros is set to 1000 as the UID. This will typically allow you to edit the files produced by this container without issue.
+>
+> If you however change the default UID or GID using these environment variables, make sure your user, and also the owner of the bind mount files, are able to access the files.
+
 * `PUID` - User ID of account running server within the container
 * `PGID` - Group ID of account running server within the container
 
@@ -45,7 +52,8 @@ docker run --rm -it \
 ```
 docker attach terraria
 ```
-To detach press `CTRL-p` then `CTRL-q`
+> [!TIP]
+> To detach press `CTRL-p` then `CTRL-q`
 
 ### Send commands externally to server
 ```
