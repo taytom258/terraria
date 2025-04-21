@@ -51,7 +51,8 @@ if [ "$(id -u)" = 0 ]; then
   while [ ! -e /root/sigterm ]; do 
 	sleep 1
 	((i++))
-	if [[ $i -gt ((5*60)) ]]; then
+	saveTime=6*5
+	if [[ $i -gt $saveTime  ]]; then
 		su -c 'screen -S terra -p 0 -X stuff 'save^M'' terraria
 		i=0
 	fi
