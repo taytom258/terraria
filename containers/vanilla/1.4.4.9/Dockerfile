@@ -7,7 +7,7 @@ EXPOSE 7777/udp
 
 RUN apt update && \
 	apt -y upgrade && \
-	apt -y install unzip tzdata screen gosu && \
+	apt -y install unzip tzdata screen && \
 	apt clean && \
 	rm -rf /var/lib/apt/lists/*
 

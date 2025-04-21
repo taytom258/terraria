@@ -6,11 +6,11 @@ services:
         environment:
             - PUID=1012
             - PGID=1012
-            # - WORLD=test.wld
+            - WORLD=test.wld
             - TZ=America/New_York
         network_mode: "host"
-        tty: true
-        stdin_open: true
+        #tty: true
+        #stdin_open: true
         volumes:
             - /mnt/operation/terraria:/config:z
         pull_policy: always
