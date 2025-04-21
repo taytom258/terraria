@@ -49,6 +49,7 @@ if [ "$(id -u)" = 0 ]; then
   trap "touch /root/sigterm" SIGTERM
   while [ ! -e /root/sigterm ]; do sleep 1; done
   su -c 'screen -S terra -p 0 -X stuff 'exit^M'' terraria
+  sleep 2
   echo 'SIGTERM Caught'
   rm -f /root/sigterm
   exit 0
