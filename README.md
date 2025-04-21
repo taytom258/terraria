@@ -5,7 +5,7 @@ Containerized Terraria Server (Vanilla &amp; TShock)
 
 Docker/Podman images avialable on [Docker Hub](https://hub.docker.com/r/taytom259/terraria)
 
-Github Repository [Github](https://github.com/taytom258/terraria-container)
+Github Repository - [Github](https://github.com/taytom258/terraria-container)
 
 ### Usage
 
