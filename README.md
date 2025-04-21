@@ -29,3 +29,21 @@ docker run --rm -it \
 
 ### Supported tags [taytom259/terraria:###](https://hub.docker.com/r/taytom259/terraria)
 [vanilla-1.4.4.9] [vanilla-latest] [latest] - Vanilla 1.4.4.9
+
+### Additional Features
+
+## Attaching to server to run commands interactively
+```
+docker attach terraria
+```
+## Send commands externally to server
+```
+docker exec terraria screen -S terra -p 0 -X stuff "<command here>^M"
+```
+Example using the 'save' command. "^M" is the Enter character.
+```
+docker exec terraria screen -S terra -p 0 -X stuff "save^M"
+```
+
+### Submitting issues/suggestions
+Please submit issues or recommendations within the [issues](https://github.com/taytom258/terraria-container/issues) page.
