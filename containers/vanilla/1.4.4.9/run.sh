@@ -1,6 +1,8 @@
 #!/bin/bash
 
-if [ $UID -eq 0 ]; then
+uid=$(id -u)
+
+if [ $uid -eq 0 ]; then
 	useradd -m -s /bin/bash -k /etc/ske1/ -u $PUID terraria
 	chown -R terraria:terraria /opt/terraria /config
 	exec su terraria "$0" -- "$@"
