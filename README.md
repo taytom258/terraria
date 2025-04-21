@@ -1,5 +1,5 @@
 # Terraria Containerized
-Containerized Terraria Server (Vanilla &amp; TShock(WIP))
+Containerized Terraria Server
 
 ## Links
 
@@ -33,6 +33,8 @@ docker run --rm -it \
     --name=terraria \
     docker.io/taytom259/terraria:latest
 ```
+> [!CAUTION]
+> The vanilla server does not handle container shutdown properly (WIP). Make sure external tools are autosaving and backing up world files in case of improper container shutdown.
 
 ## Supported tags [taytom259/terraria:###](https://hub.docker.com/r/taytom259/terraria)
 [vanilla-1.4.4.9] [vanilla-latest] [latest] - Vanilla 1.4.4.9
