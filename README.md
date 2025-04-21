@@ -47,11 +47,11 @@ docker attach terraria
 ```
 ### Send commands externally to server
 ```
-docker exec terraria screen -S terra -p 0 -X stuff "<command here>^M"
+docker exec -u terraria terraria screen -S terra -p 0 -X stuff "<command here>^M"
 ```
 Example using the 'save' command. "^M" is the Enter character.
 ```
-docker exec terraria screen -S terra -p 0 -X stuff "save^M"
+docker exec -u terraria terraria screen -S terra -p 0 -X stuff "save^M"
 ```
 
 ## Submitting issues/suggestions
