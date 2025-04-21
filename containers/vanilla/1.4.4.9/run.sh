@@ -24,9 +24,11 @@ wait_term()
     if [ "${term_kill_needed}" ]; then
         kill -TERM "${term_child_pid}" 2>/dev/null 
     fi
-    wait ${term_child_pid} 2>/dev/null
+    #wait ${term_child_pid} 2>/dev/null
+    wait
     trap - TERM INT
-    wait ${term_child_pid} 2>/dev/null
+    #wait ${term_child_pid} 2>/dev/null
+    wait
 }
 
 if [ ! -f "/config/serverconfig.txt" ]; then
