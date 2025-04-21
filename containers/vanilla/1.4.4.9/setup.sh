@@ -24,7 +24,7 @@ if [ "$(id -u)" = 0 ]; then
     fi
   fi
 
-  if [[ $(stat -c "%u" /data) != "$PUID" ]]; then
+  if [[ $(stat -c "%u" /config) != "$PUID" ]]; then
     chown -R ${runAsUser}:${runAsGroup} /config /opt/terraria
   fi
 
