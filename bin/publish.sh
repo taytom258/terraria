@@ -2,7 +2,7 @@
 
 vlatest="1.4.4.9"
 rootdir=/home/ttomlin/development/terraria.container/
-branch=$(git branch --showcurrent)
+branch=$(git branch --show-current)
 
 
 if [ "$branch" == "main" ]; then
