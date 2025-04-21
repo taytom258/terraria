@@ -7,6 +7,7 @@ services:
       - PUID=1012
       - PGID=1012
       - WORLD=test.wld
+      - TZ=America/New_York
     network_mode: "host"
     #tty: true
     #stdin_open: true

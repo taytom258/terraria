@@ -34,12 +34,16 @@ if [ "$(id -u)" = 0 ]; then
         touch /config/banlist.txt
   fi
 
-  if [ -n $WORLD  ]; then
+  if [ -n "$WORLD" ]; then
         serverARGS="-world /config/$WORLD $@"
   fi
 
   chown -R ${runAsUser}:${runAsGroup} /config /opt/terraria
   chmod -R g+w /config 
+
+  if [ -z "$WORLD" ]; then
+	  gosu ${runAsUser}:${runAsGroup} "screen -mS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'"
+  fi
 
   date=`date +"%Y-%m-%d-%H%M"`
   su -c "screen -dmS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'" ${runAsUser}
