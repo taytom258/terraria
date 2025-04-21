@@ -44,14 +44,14 @@ if [ "$(id -u)" = 0 ]; then
   #gosu ${runAsUser}:${runAsGroup} /opt/terraria/run.sh "$@"
 
   date=$(date)
-  screen -dmS -L -Logfile /config/server.$date.log terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt "$serverARGS"
+  su -c 'screen -dmS -L -Logfile /config/server.'$date'.log terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'' terraria
 
   trap 'touch /root/sigterm' TERM
   i=0
   while [ ! -e /root/sigterm ]; do 
 	sleep 1
 	((i++))
-	saveTime=$((6*5))
+	saveTime=$((60*5))
 	if [[ $i -gt $saveTime  ]]; then
 		su -c 'screen -S terra -p 0 -X stuff 'save^M'' terraria
 		i=0
