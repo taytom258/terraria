@@ -44,7 +44,7 @@ if [ "$(id -u)" = 0 ]; then
   #gosu ${runAsUser}:${runAsGroup} /opt/terraria/run.sh "$@"
 
   date=$(date)
-  su -c 'screen -dmS -L -Logfile /config/server.$date.log terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt $serverARGS' terraria
+  su -c "screen -dmS -L -Logfile /config/server.$date.log terra ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt $serverARGS" terraria
 
   trap 'touch /root/sigterm' TERM
   i=0
