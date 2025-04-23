@@ -68,7 +68,7 @@ if [ "$(id -u)" = 0 ]; then
 		su -c "screen -dmS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
 
 		if ! screen -list | grep -q "terra"; then
-			echo -e 'Server started ['$serverARGS']'
+			echo -e 'Server started [TerrariaServer -x64 '$serverARGS']'
 		else
 			echo -e 'Server failed to start'
 		fi
