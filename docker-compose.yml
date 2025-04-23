@@ -6,9 +6,9 @@ services:
         environment:
             - PUID=1012
             - PGID=1012
-            - WORLD=n.wld
+            #- WORLD=n.wld
             - TZ=America/New_York
-            - VERSION=1449
+            - VERSION=1061
             - TYPE=vanilla
         network_mode: "host"
         tty: true

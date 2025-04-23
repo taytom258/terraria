@@ -4,7 +4,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 date=`date +"%Y-%m-%d-%H%M"`
-serverARGS="$@"
+serverARGS="-config /config/serverconfig.txt -banlist /config/banlist.txt"
 serverURL=https://terraria.org/api/download/pc-dedicated-server/terraria-server-$VERSION.zip
 
 if [ "$(id -u)" = 0 ]; then
@@ -32,9 +32,6 @@ if [ "$(id -u)" = 0 ]; then
 	fi
 	
 	if [[ ! -e /opt/terraria/$VERSION.ver ]]; then
-		if [[ '$VERSION' == '1061' || '$VERSION' == '112' ]]; then
-			serverURL=https://terraria.org/extra/terraria-server-$VERSION.zip
-		fi
 		rm -rf /opt/terraria/server/*
 		wget -q -O /tmp/terraria/server.zip $serverURL
 		unzip -q -d /tmp/terraria/ /tmp/terraria/server.zip && \
@@ -56,7 +53,9 @@ if [ "$(id -u)" = 0 ]; then
 	fi
 
 	if [ -n "$WORLD" ]; then
-		serverARGS="-world /config/$WORLD $@"
+		serverARGS="$serverARGS -world /config/$WORLD $@"
+	else
+		serverARGS="$serverARGS $@"
 	fi
 
 	chown -R ${runAsUser}:${runAsGroup} /config /opt/terraria
@@ -64,12 +63,12 @@ if [ "$(id -u)" = 0 ]; then
 	chmod -R g+w /config
 
 	if [ -z "$WORLD" ]; then
-		su -c "screen -mS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'" ${runAsUser}
+		su -c "screen -mS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
 	else
-		su -c "screen -dmS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'" ${runAsUser}
+		su -c "screen -dmS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
 
 		if ! screen -list | grep -q "terra"; then
-			echo -e 'Server started'
+			echo -e 'Server started ['$serverARGS']'
 		else
 			echo -e 'Server failed to start'
 		fi
