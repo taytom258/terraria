@@ -21,7 +21,7 @@ COPY --chown=$PUID:$PGID --chmod=750 scripts/check-run.sh /opt/terraria/check-ru
 VOLUME ["/config"]
 
 HEALTHCHECK --interval=5m --timeout=3s \
-  CMD /opt/terraria/check-run.sh
+  CMD lsof -i:$SERVER_PORT -t
 
 WORKDIR /opt/terraria/server
 
