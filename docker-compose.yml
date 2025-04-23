@@ -8,6 +8,8 @@ services:
             - PGID=1012
             #- WORLD=test.wld
             - TZ=America/New_York
+            - VERSION=1449
+            - TYPE=vanilla
         network_mode: "host"
         tty: true
         stdin_open: true
