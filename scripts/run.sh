@@ -2,7 +2,7 @@
 
 date=`date +"%Y-%m-%d-%H%M"`
 serverARGS="$@"
-serverURL='https://terraria.org/api/download/pc-dedicated-server/terraria-server-$VERSION.zip'
+serverURL="https://terraria.org/api/download/pc-dedicated-server/terraria-server-'$VERSION'.zip"
 
 if [ "$(id -u)" = 0 ]; then
 	runAsUser=terraria
@@ -30,7 +30,7 @@ if [ "$(id -u)" = 0 ]; then
 	
 	if [[ ! -e /opt/terraria/$VERSION.ver ]]; then
 		if [[ '$VERSION' == '1061' || '$VERSION' == '112' ]]; then
-			serverURL='https://terraria.org/extra/terraria-server-$VERSION.zip'
+			serverURL="https://terraria.org/extra/terraria-server-'$VERSION'.zip"
 		fi
 		rm -rf /opt/terraria/server/*
 		wget -O /tmp/terraria/server.zip $serverURL
