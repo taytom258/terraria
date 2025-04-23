@@ -21,4 +21,4 @@ VOLUME ["/config"]
 
 WORKDIR /opt/terraria/server
 
-ENTRYPOINT ["../run.sh"]
+ENTRYPOINT ["/opt/terraria/run.sh"]
