@@ -7,8 +7,8 @@ if [[ "$(git branch --show-current)" == "dev" ]]; then
 	podman push docker.io/taytom259/terraria:vanilla-$vlatest-dev
 else
 	podman build -t docker.io/taytom259/terraria:vanilla-$vlatest .
-	docker image tag docker.io/taytom259/terraria:vanilla-$vlatest docker.io/taytom259/terraria:latest
-	docker image tag docker.io/taytom259/terraria:vanilla-$vlatest docker.io/taytom259/terraria:vanilla-latest
+	podman image tag docker.io/taytom259/terraria:vanilla-$vlatest docker.io/taytom259/terraria:latest
+	podman image tag docker.io/taytom259/terraria:vanilla-$vlatest docker.io/taytom259/terraria:vanilla-latest
 
 	podman push docker.io/taytom259/terraria:vanilla-$vlatest
 	podman push docker.io/taytom259/terraria:vanilla-latest
