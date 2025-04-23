@@ -1,30 +1,9 @@
 #!/bin/bash
 
 vlatest="1.4.4.9"
-rootdir=/home/ttomlin/development/terraria.container/
-branch=$(git branch --show-current)
 
-
-if [ "$branch" == "main" ]; then
-	podman build -t "docker.io/taytom259/terraria:vanilla-1.4.4.9" .
-
-
-	podman tag "docker.io/taytom259/terraria:vanilla-$vlatest" \
-		docker.io/taytom259/terraria:vanilla-latest
-	podman tag "docker.io/taytom259/terraria:vanilla-$vlatest" \
-		docker.io/taytom259/terraria:latest
-
-	podman push docker.io/taytom259/terraria:vanilla-$vlatest
-	podman push docker.io/taytom259/terraria:vanilla-latest
-	podman push docker.io/taytom259/terraria:latest
-elif [ "$branch" == "dev" ]; then
-	podman build -t "docker.io/taytom259/terraria:vanilla-1.4.4.9-dev" .
-
-
-	podman push docker.io/taytom259/terraria:vanilla-$vlatest-dev
-fi
-
-cd $rootdir
+podman build -t docker.io/taytom259/terraria:vanilla-$vlatest-dev .
+podman push docker.io/taytom259/terraria:vanilla-$vlatest-dev
 
 git add .
 if [ -z "$1" ]
