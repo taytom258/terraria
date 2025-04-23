@@ -1,5 +1,8 @@
 #!/bin/bash
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
 date=`date +"%Y-%m-%d-%H%M"`
 serverARGS="$@"
 serverURL=https://terraria.org/api/download/pc-dedicated-server/terraria-server-$VERSION.zip
@@ -65,16 +68,22 @@ if [ "$(id -u)" = 0 ]; then
 	else
 		su -c "screen -dmS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'" ${runAsUser}
 
+		if ! screen -list | grep -q "terra"; then
+			echo -e '${GREEN}Server started!'
+		else
+			echo -e '${RED}Server failed to start!'
+		fi
+		
 		trap "touch /root/sigterm" SIGTERM
 		while [ ! -e /root/sigterm ]; do sleep 1; done
 		su -c 'screen -S terra -p 0 -X stuff 'exit^M'' terraria
-		echo 'SIGTERM Caught'
+		echo -e '${GREEN}SIGTERM Caught'
 		rm -f /root/sigterm
 		sleep 2
 	fi
 	exit 0
 
 else
-	echo "Setup permission not root! Please utilize ENV variables to set UID/GID."
+	echo -e  "${RED}Setup permission not root! Please utilize ENV variables to set UID/GID."
 	exit 1
 fi
