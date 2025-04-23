@@ -1,6 +1,8 @@
 #!/bin/bash
 
+date=`date +"%Y-%m-%d-%H%M"`
 serverARGS="$@"
+serverURL='https://terraria.org/api/download/pc-dedicated-server/terraria-server-$VERSION.zip'
 
 if [ "$(id -u)" = 0 ]; then
 	runAsUser=terraria
@@ -25,6 +27,22 @@ if [ "$(id -u)" = 0 ]; then
 			runAsGroup=root
 		fi
 	fi
+	
+	if [[ ! -e /opt/terraria/$VERSION.ver ]]; then
+		if [[ '$VERSION' == '1061' || '$VERSION' == '112' ]]; then
+			serverURL='https://terraria.org/extra/terraria-server-$VERSION.zip'
+		fi
+		rm -rf /opt/terraria/*
+		wget -O /tmp/terraria/server.zip $serverURL
+		unzip -q -d /tmp/terraria/ /tmp/terraria/server.zip && \
+		cp -r /tmp/terraria/$VERSION/Linux/* /opt/terraria/ && \
+		cp /tmp/terraria/$VERSION/Windows/serverconfig.txt /opt/terraria/serverconfig.default && \
+		sed -in '/#maxplayers=.*/c\maxplayers=16' /opt/terraria/serverconfig.default && \
+		sed -in '/#port=.*/c\port=7777' /opt/terraria/serverconfig.default && \
+		sed -in '/#worldpath=.*/c\worldpath=/config/' /opt/terraria/serverconfig.default && \
+		rm -rf /tmp/* /opt/terraria/*.defaultn
+		touch /opt/terraria/$VERSION.ver
+	fi
 
 	if [ ! -f "/config/serverconfig.txt" ]; then
 		cp ./serverconfig.default /config/serverconfig.txt
@@ -39,9 +57,8 @@ if [ "$(id -u)" = 0 ]; then
 	fi
 
 	chown -R ${runAsUser}:${runAsGroup} /config /opt/terraria
+	chmod +x /opt/terraria/TerrariaServer*
 	chmod -R g+w /config
-
-	date=`date +"%Y-%m-%d-%H%M"`
 
 	if [ -z "$WORLD" ]; then
 		su -c "screen -mS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 -config /config/serverconfig.txt -banlist /config/banlist.txt '$serverARGS'" ${runAsUser}
