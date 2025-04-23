@@ -6,7 +6,6 @@ branch=$(git branch --show-current)
 
 
 if [ "$branch" == "main" ]; then
-	cd $rootdir/containers/vanilla/1.4.4.9
 	podman build -t "docker.io/taytom259/terraria:vanilla-1.4.4.9" .
 
 
@@ -19,7 +18,6 @@ if [ "$branch" == "main" ]; then
 	podman push docker.io/taytom259/terraria:vanilla-latest
 	podman push docker.io/taytom259/terraria:latest
 elif [ "$branch" == "dev" ]; then
-	cd $rootdir/containers/vanilla/1.4.4.9
 	podman build -t "docker.io/taytom259/terraria:vanilla-1.4.4.9-dev" .
 
 
