@@ -11,7 +11,7 @@ RUN apt update && \
 	apt clean && \
 	rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /config /opt/terraria /tmp/terraria && \
+RUN mkdir -p /config /opt/terraria/server /tmp/terraria && \
 	userdel -f ubuntu && \
 	useradd -m -s /bin/bash -k /etc/ske1/ -u $PUID terraria
 
@@ -19,6 +19,6 @@ COPY --chown=$PUID:$PGID --chmod=750 scripts/run.sh /opt/terraria/run.sh
 
 VOLUME ["/config"]
 
-WORKDIR /opt/terraria/
+WORKDIR /opt/terraria/server
 
-ENTRYPOINT ["./run.sh"]
+ENTRYPOINT ["../run.sh"]

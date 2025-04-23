@@ -32,15 +32,15 @@ if [ "$(id -u)" = 0 ]; then
 		if [[ '$VERSION' == '1061' || '$VERSION' == '112' ]]; then
 			serverURL='https://terraria.org/extra/terraria-server-$VERSION.zip'
 		fi
-		rm -rf /opt/terraria/*
+		rm -rf /opt/terraria/server/*
 		wget -O /tmp/terraria/server.zip $serverURL
 		unzip -q -d /tmp/terraria/ /tmp/terraria/server.zip && \
-		cp -r /tmp/terraria/$VERSION/Linux/* /opt/terraria/ && \
-		cp /tmp/terraria/$VERSION/Windows/serverconfig.txt /opt/terraria/serverconfig.default && \
-		sed -in '/#maxplayers=.*/c\maxplayers=16' /opt/terraria/serverconfig.default && \
-		sed -in '/#port=.*/c\port=7777' /opt/terraria/serverconfig.default && \
-		sed -in '/#worldpath=.*/c\worldpath=/config/' /opt/terraria/serverconfig.default && \
-		rm -rf /tmp/* /opt/terraria/*.defaultn
+		cp -r /tmp/terraria/$VERSION/Linux/* /opt/terraria/server/ && \
+		cp /tmp/terraria/$VERSION/Windows/serverconfig.txt /opt/terraria/server/serverconfig.default && \
+		sed -in '/#maxplayers=.*/c\maxplayers=16' /opt/terraria/server/serverconfig.default && \
+		sed -in '/#port=.*/c\port=7777' /opt/terraria/server/serverconfig.default && \
+		sed -in '/#worldpath=.*/c\worldpath=/config/' /opt/terraria/server/serverconfig.default && \
+		rm -rf /tmp/* /opt/terraria/server/*.defaultn
 		touch /opt/terraria/$VERSION.ver
 	fi
 
@@ -57,7 +57,7 @@ if [ "$(id -u)" = 0 ]; then
 	fi
 
 	chown -R ${runAsUser}:${runAsGroup} /config /opt/terraria
-	chmod +x /opt/terraria/TerrariaServer*
+	chmod +x /opt/terraria/server/TerrariaServer*
 	chmod -R g+w /config
 
 	if [ -z "$WORLD" ]; then
