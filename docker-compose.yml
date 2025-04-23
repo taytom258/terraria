@@ -6,11 +6,16 @@ services:
         environment:
             - PUID=1012
             - PGID=1012
-            - WORLD=test.wld
+            #- WORLD=n.wld
             - TZ=America/New_York
+            - VERSION=1446
+            - TYPE=vanilla
         network_mode: "host"
         tty: true
         stdin_open: true
         volumes:
-            - /mnt/operation/terraria:/config:z
+            - terraria:/config:z
         pull_policy: always
+
+volumes:
+  terraria:
