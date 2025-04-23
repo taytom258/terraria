@@ -41,7 +41,7 @@ if [ "$(id -u)" = 0 ]; then
 		cp -r /tmp/terraria/$VERSION/Linux/* /opt/terraria/server/ && \
 		cp /tmp/terraria/$VERSION/Windows/serverconfig.txt /opt/terraria/server/serverconfig.default && \
 		sed -in '/#maxplayers=.*/c\maxplayers=16' /opt/terraria/server/serverconfig.default && \
-		sed -in '/#port=.*/c\port=7777' /opt/terraria/server/serverconfig.default && \
+		sed -in '/#port=.*/c\port='$SERVER_PORT'' /opt/terraria/server/serverconfig.default && \
 		sed -in '/#worldpath=.*/c\worldpath=/config/' /opt/terraria/server/serverconfig.default && \
 		rm -rf /tmp/* /opt/terraria/server/*.defaultn
 		touch /opt/terraria/$VERSION.ver
@@ -75,6 +75,7 @@ if [ "$(id -u)" = 0 ]; then
 		fi
 		
 		trap "touch /root/sigterm" SIGTERM
+		/bin/bash
 		while [ ! -e /root/sigterm ]; do sleep 1; done
 		su -c 'screen -S terra -p 0 -X stuff 'exit^M'' terraria
 		echo -e 'SIGTERM Caught'
