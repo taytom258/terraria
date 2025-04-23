@@ -16,8 +16,8 @@ docker run --rm -it \
     -e PUID=1000 \
     -e PGID=1000 \
     -e TZ=America/New_York \
-	-e VERSION=1449 \
-	-e TYPE=vanilla \
+    -e VERSION=1449 \
+    -e TYPE=vanilla \
     -v $HOME/terraria/config:/config \
     --name=terraria \
     docker.io/taytom259/terraria:latest
@@ -39,8 +39,8 @@ docker run --rm \
     -e PGID=1000 \
     -e WORLD=world.wld \
     -e TZ=America/New_York \
-	-e VERSION=1449 \
-	-e TYPE=vanilla \
+    -e VERSION=1449 \
+    -e TYPE=vanilla \
     -v $HOME/terraria/config:/config \
     --name=terraria \
     docker.io/taytom259/terraria:latest
@@ -64,8 +64,8 @@ services:
       - PGID=1000
       - WORLD=world.wld
       - TZ=America/New_York
-	  - VERSION=1449
-	  - TYPE=vanilla
+      - VERSION=1449
+      - TYPE=vanilla
     volumes:
       - $HOME/terraria/config:/config
     restart: unless-stopped
