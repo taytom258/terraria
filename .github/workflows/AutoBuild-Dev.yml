@@ -1,13 +1,9 @@
 name: AutoBuild
 
 on:
-  schedule:
-    - cron: "0 03 * * *"
   push:
     branches:
-      - 'main'
-    tags:
-      - "v*"
+      - 'dev'
   pull_request:
   workflow_dispatch:
   
@@ -38,8 +34,8 @@ jobs:
             ${{ vars.DOCKERHUB_USERNAME }}/terraria-dev
             ghcr.io/${{ github.repository }}
           tags: |
-            type=schedule,pattern=nightly
-            type=ref,event=tag
+            dev
+            type=sha
             
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -50,7 +46,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          #push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           

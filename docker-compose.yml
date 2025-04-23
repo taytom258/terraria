@@ -8,7 +8,7 @@ services:
             - PGID=1012
             #- WORLD=n.wld
             - TZ=America/New_York
-            - VERSION=1061
+            - VERSION=1446
             - TYPE=vanilla
         network_mode: "host"
         tty: true
