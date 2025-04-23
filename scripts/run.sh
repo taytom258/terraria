@@ -33,7 +33,7 @@ if [ "$(id -u)" = 0 ]; then
 			serverURL=https://terraria.org/extra/terraria-server-$VERSION.zip
 		fi
 		rm -rf /opt/terraria/server/*
-		wget -O /tmp/terraria/server.zip $serverURL
+		wget -q -O /tmp/terraria/server.zip $serverURL
 		unzip -q -d /tmp/terraria/ /tmp/terraria/server.zip && \
 		cp -r /tmp/terraria/$VERSION/Linux/* /opt/terraria/server/ && \
 		cp /tmp/terraria/$VERSION/Windows/serverconfig.txt /opt/terraria/server/serverconfig.default && \
