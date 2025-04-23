@@ -5,7 +5,7 @@ on:
   
 jobs:
   build:
-    runs-on: [self-hosted,ubuntu:latest]
+    runs-on: [self-hosted, linux]
     steps:
       - name: Login to Docker Hub
         if: github.event_name != 'pull_request'
