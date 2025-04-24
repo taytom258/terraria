@@ -10,10 +10,10 @@ LABEL org.opencontainers.image.licenses=LGPL-3.0-only
 EXPOSE $SERVER_PORT/tcp
 EXPOSE $SERVER_PORT/udp
 
-RUN apt update && \
-	apt -y upgrade && \
-	apt -y install unzip tzdata screen wget && \
-	apt clean && \
+RUN apt-get update && \
+	apt-get -y upgrade && \
+	apt-get -y install unzip tzdata screen wget && \
+	apt-get clean && \
 	rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /config /opt/terraria/server /tmp/terraria && \

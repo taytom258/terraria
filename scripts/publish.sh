@@ -8,4 +8,4 @@ if [ -z "$1" ]
     git commit -m "$1"
 fi
 git push origin
-
+git push origin --tags

@@ -47,7 +47,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and Push Test
+      - name: Build test
         uses: docker/build-push-action@v6
         with:
           load: true
