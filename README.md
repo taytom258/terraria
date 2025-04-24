@@ -40,7 +40,7 @@ docker run --rm \
     -p 7777:7777 \
     -e PUID=1000 \
     -e PGID=1000 \
-    -e WORLD=world.wld \
+    -e WORLD=/config/world.wld \
     -e TZ=America/New_York \
     -e VERSION=1449 \
     -e TYPE=vanilla \
@@ -50,7 +50,7 @@ docker run --rm \
 ```
 
 ## Supported tags
-[edge] [latest] - Latest Server Build<br/>
+[latest] - Latest Server Build<br/>
 [v1.0.0] - Server Release 1.0.0<br/>
 [dev] - Server Development Build - More than likely broken!
 
@@ -66,7 +66,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - WORLD=world.wld
+      - WORLD=/config/world.wld
       - TZ=America/New_York
       - VERSION=1449
       - TYPE=vanilla

@@ -53,7 +53,7 @@ if [ "$(id -u)" = 0 ]; then
 	fi
 
 	if [ -n "$WORLD" ]; then
-		serverARGS="$serverARGS -world /config/$WORLD $@"
+		serverARGS="$serverARGS -world $WORLD $@"
 	else
 		serverARGS="$serverARGS $@"
 	fi

@@ -47,12 +47,13 @@ jobs:
       - name: Build and Push Test
         uses: docker/build-push-action@v6
         with:
+          platforms: linux/amd64
           load: true
           tags: ${{ env.TEST_TAG }}
 
       - name: Test
         run: |
-          docker run -i --rm ${{ env.TEST_TAG }}
+          docker run -e WORLD=/opt/terraria/test.wld --rm ${{ env.TEST_TAG }}
           
       - name: Docker Meta - Main
         if: github.ref_name == 'main'
@@ -64,7 +65,6 @@ jobs:
             ghcr.io/${{ github.repository }}
           tags: |
             latest
-            type=edge
             type=ref,event=tag
 
       - name: Docker Meta - Dev

@@ -3,6 +3,7 @@ FROM ubuntu:noble
 ENV PUID=1000 PGID=1000 VERSION=1449 TYPE=vanilla SERVER_PORT=7777
 
 LABEL org.opencontainers.image.source=https://github.com/taytom258/terraria
+LABEL org.opencontainers.image.description="Terraria Containerized"
 
 EXPOSE $SERVER_PORT/tcp
 EXPOSE $SERVER_PORT/udp
@@ -18,6 +19,7 @@ RUN mkdir -p /config /opt/terraria/server /tmp/terraria && \
 	useradd -m -s /bin/bash -k /etc/ske1/ -u $PUID terraria
 
 COPY --chown=$PUID:$PGID --chmod=751 scripts/run.sh /opt/terraria/run.sh
+COPY --chown=$PUID:$PGID --chmod=751 opt/test.wld /opt/terraria/test.wld
 
 VOLUME ["/config"]
 
