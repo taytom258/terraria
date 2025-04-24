@@ -9,7 +9,7 @@ on:
       - '**/run.sh'
       - 'Dockerfile'
       - '**/AutoBuild.yml'
-    tag:
+    tags:
       - v**
   pull_request:
 
