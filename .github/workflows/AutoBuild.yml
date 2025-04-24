@@ -58,7 +58,7 @@ jobs:
           docker run -e WORLD=/opt/terraria/test.wld -e TEST=true --rm ${{ env.TEST_TAG }}
           
       - name: Docker Meta - Main
-        if: github.ref_name == 'main'
+        if: github.ref_name == 'main' || github.ref_type == 'tag'
         id: meta
         uses: docker/metadata-action@v5
         with:
