@@ -19,7 +19,7 @@ RUN mkdir -p /config /opt/terraria/server /tmp/terraria && \
 	useradd -m -s /bin/bash -k /etc/ske1/ -u $PUID terraria
 
 COPY --chown=$PUID:$PGID --chmod=751 scripts/run.sh /opt/terraria/run.sh
-COPY --chown=$PUID:$PGID --chmod=751 opt/test.wld /opt/terraria/test.wld
+COPY --chown=$PUID:$PGID --chmod=751 files/test.wld /opt/terraria/test.wld
 
 VOLUME ["/config"]
 
