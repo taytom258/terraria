@@ -31,7 +31,7 @@ docker run --rm -it \
     ghcr.io/taytom258/terraria-container
 ```
 
-After the initial world generation you can specify the world by specifying the .wld file within an environment variable.
+After the initial world generation you can declare the world by specifying the path to the .wld file within an environment variable.
 Remember to set your settings in the serverconfig.txt located within the /config directory.
 
 > [!CAUTION]
@@ -39,7 +39,7 @@ Remember to set your settings in the serverconfig.txt located within the /config
 > Running your server interactively disables the autosave on exit functionality. You have been warned!
 
 ## Usage (Headless Daemon Mode)
-Logs are stored within the /config directory
+Logs & worlds are stored within the /config directory
 ```
 docker run --rm \
     -p 7777:7777 \
