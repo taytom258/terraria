@@ -1,15 +1,14 @@
 name: AutoBuild
 
 on:
-  schedule:
-    - cron: "0 03 * * *"
   push:
     branches:
       - 'main'
-    tags:
-      - "v*"
   pull_request:
-  workflow_dispatch:
+
+permissions:
+  packages:read
+  packages:write
   
 jobs:
   build:
@@ -35,11 +34,10 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            taytom259/terraria
+            ${{ vars.DOCKERHUB_OWNER }}/${{ vars.REPOSITORY }}
             ghcr.io/${{ github.repository }}
           tags: |
-            type=edge,branch=main
-            type=schedule,pattern=nightly
+            latest
             type=ref,event=tag
             
       - name: Set up QEMU
