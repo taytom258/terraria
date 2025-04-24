@@ -1,8 +1,5 @@
 #!/bin/bash
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m' # No Color
 date=`date +"%Y-%m-%d-%H%M"`
 serverARGS="-config /config/serverconfig.txt -banlist /config/banlist.txt"
 serverURL=https://terraria.org/api/download/pc-dedicated-server/terraria-server-$VERSION.zip
@@ -78,7 +75,6 @@ if [ "$(id -u)" = 0 ]; then
 		fi
 		
 		trap "touch /root/sigterm" SIGTERM
-		#/bin/bash
 		while [ ! -e /root/sigterm ]; do sleep 1; done
 		su -c 'screen -S terra -p 0 -X stuff 'exit^M'' terraria
 		echo -e 'SIGTERM Caught'
