@@ -69,8 +69,12 @@ if [ "$(id -u)" = 0 ]; then
 
 		if ! screen -list | grep -q "terra"; then
 			echo -e 'Server started [TerrariaServer -x64 '$serverARGS']'
+			if [[ $TEST ]]; then
+				exit 0
+			fi
 		else
 			echo -e 'Server failed to start'
+			exit 2
 		fi
 		
 		trap "touch /root/sigterm" SIGTERM

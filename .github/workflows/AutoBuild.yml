@@ -53,7 +53,7 @@ jobs:
 
       - name: Test
         run: |
-          docker run -e WORLD=/opt/terraria/test.wld --rm ${{ env.TEST_TAG }}
+          docker run -e WORLD=/opt/terraria/test.wld -e TEST=true --rm ${{ env.TEST_TAG }}
           
       - name: Docker Meta - Main
         if: github.ref_name == 'main'
