@@ -2,8 +2,9 @@ FROM ubuntu:noble
 
 ENV PUID=1000 PGID=1000 VERSION=1449 TYPE=vanilla SERVER_PORT=7777
 
-LABEL org.opencontainers.image.source=https://github.com/taytom258/terraria
+LABEL org.opencontainers.image.source=https://github.com/taytom258/terraria-container
 LABEL org.opencontainers.image.description="Terraria Containerized"
+LABEL org.opencontainers.image.licenses=LGPL-3.0-only
 
 EXPOSE $SERVER_PORT/tcp
 EXPOSE $SERVER_PORT/udp
