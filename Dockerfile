@@ -1,4 +1,4 @@
-FROM ubuntu:plucky
+FROM ubuntu:noble
 
 ENV PUID=1000 PGID=1000 VERSION=1449 TYPE=vanilla SERVER_PORT=7777
 

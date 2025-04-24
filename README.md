@@ -50,7 +50,7 @@ docker run --rm \
 ## Supported tags
 [edge] [latest] - Latest Server Build<br/>
 [v1.0.0] - Server Release 1.0.0<br/>
-[dev] - Server Development Build - Bleeding edge, more than likely broken!
+[dev] - Server Development Build - More than likely broken!
 
 ## Docker Compose Example
 ```
