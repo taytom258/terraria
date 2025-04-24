@@ -9,6 +9,8 @@ on:
       - '**/run.sh'
       - 'Dockerfile'
       - '**/AutoBuild.yml'
+    tag:
+      - v**
   pull_request:
 
 env:
@@ -27,6 +29,7 @@ jobs:
       - name: Validate build configuration
         uses: docker/build-push-action@v6
         with:
+          platforms: linux/amd64
           call: check
     
       - name: Login to Docker Hub
@@ -47,7 +50,6 @@ jobs:
       - name: Build and Push Test
         uses: docker/build-push-action@v6
         with:
-          platforms: linux/amd64
           load: true
           tags: ${{ env.TEST_TAG }}
 
@@ -60,12 +62,14 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
+          flavor: |
+            latest=false
           images: |
             ${{ vars.DOCKERHUB_OWNER }}/${{ vars.REPOSITORY }}
             ghcr.io/${{ github.repository }}
           tags: |
             latest
-            type=ref,event=tag
+            type=semver,pattern={{version}}
 
       - name: Docker Meta - Dev
         if: github.ref_name == 'dev'
