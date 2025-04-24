@@ -35,9 +35,10 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ vars.DOCKERHUB_USERNAME }}/terraria
+            taytom259/terraria
             ghcr.io/${{ github.repository }}
           tags: |
+            type=edge,branch=main
             type=schedule,pattern=nightly
             type=ref,event=tag
             
