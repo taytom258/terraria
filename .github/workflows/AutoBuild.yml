@@ -6,9 +6,9 @@ on:
       - 'main'
       - 'dev'
     paths:
-      - 'run.sh'
+      - '**/run.sh'
       - 'Dockerfile'
-      - 'AutoBuild.yml'
+      - '**/AutoBuild.yml'
   pull_request:
 
 env:
