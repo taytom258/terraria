@@ -1,10 +1,10 @@
 # Terraria Containerized
 
-Docker Images
-	- [Docker Hub](https://hub.docker.com/r/taytom259/terraria)
+Docker Images<br/>
+	- [Docker Hub](https://hub.docker.com/r/taytom259/terraria)<br/>
 	- [Github Packages](https://github.com/taytom258/terraria-container/pkgs/container/terraria-container)
 	
-Github Repository
+Github Repository<br/>
 	- [Github](https://github.com/taytom258/terraria-container)
 
 ## Usage (Initial Interactive Mode)
@@ -48,7 +48,7 @@ docker run --rm \
 
 ## Supported tags
 [edge] [latest] - Latest Server Build<br/>
-[v1.0.0] - Server Release 1.0.0
+[v1.0.0] - Server Release 1.0.0<br/>
 [dev] - Server Development Build - Bleeding edge, more than likely broken!
 
 ## Docker Compose Example
