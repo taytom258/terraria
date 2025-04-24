@@ -2,6 +2,8 @@ FROM ubuntu:plucky
 
 ENV PUID=1000 PGID=1000 VERSION=1449 TYPE=vanilla SERVER_PORT=7777
 
+LABEL org.opencontainers.image.source=https://github.com/taytom258/terraria
+
 EXPOSE $SERVER_PORT/tcp
 EXPOSE $SERVER_PORT/udp
 
