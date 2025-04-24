@@ -1,5 +1,7 @@
 # Terraria Containerized
 
+[![AutoBuild](https://github.com/taytom258/terraria-container/actions/workflows/AutoBuild.yml/badge.svg?branch=main)](https://github.com/taytom258/terraria-container/actions/workflows/AutoBuild.yml)
+
 Docker Images<br/>
 [Github Packages](https://github.com/taytom258/terraria-container/pkgs/container/terraria-container)<br/>
 [Docker Hub](https://hub.docker.com/r/taytom259/terraria)
