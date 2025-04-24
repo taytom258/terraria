@@ -2,6 +2,8 @@
 
 [![AutoBuild](https://github.com/taytom258/terraria-container/actions/workflows/AutoBuild.yml/badge.svg?branch=main)](https://github.com/taytom258/terraria-container/actions/workflows/AutoBuild.yml)
 ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/taytom259/terraria-container/latest)
+![Docker Pulls](https://img.shields.io/docker/pulls/taytom259/terraria-container)
+
 
 
 Docker Images<br/>
