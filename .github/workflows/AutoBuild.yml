@@ -52,7 +52,7 @@ jobs:
 
       - name: Test
         run: |
-          docker run -it --rm ${{ env.TEST_TAG }}
+          docker run -i --rm ${{ env.TEST_TAG }}
           
       - name: Docker Meta - Main
         if: github.ref_name == 'main'

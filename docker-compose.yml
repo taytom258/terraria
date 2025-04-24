@@ -2,11 +2,11 @@ name: terraria-container
 
 services:
     terraria:
-        image: docker.io/taytom259/terraria:vanilla-1.4.4.9-dev
+        image: ghcr.io/taytom258/terraria-container:dev
         environment:
             - PUID=1012
             - PGID=1012
-            #- WORLD=n.wld
+            - WORLD=test.wld
             - TZ=America/New_York
             - VERSION=1446
             - TYPE=vanilla
