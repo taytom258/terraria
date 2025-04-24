@@ -1,11 +1,12 @@
 # Terraria Containerized
 
 Docker Images<br/>
-	- [Docker Hub](https://hub.docker.com/r/taytom259/terraria)<br/>
-	- [Github Packages](https://github.com/taytom258/terraria-container/pkgs/container/terraria-container)
+[Github Packages](https://github.com/taytom258/terraria-container/pkgs/container/terraria-container)<br/>
+[Docker Hub](https://hub.docker.com/r/taytom259/terraria)
+
 	
 Github Repository<br/>
-	- [Github](https://github.com/taytom258/terraria-container)
+[Github](https://github.com/taytom258/terraria-container)
 
 ## Usage (Initial Interactive Mode)
 
