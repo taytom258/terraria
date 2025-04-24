@@ -1,8 +1,11 @@
 # Terraria Containerized
 
-Docker/Podman Images - [Docker Hub](https://hub.docker.com/r/taytom259/terraria)
-
-Github Repository - [Github](https://github.com/taytom258/terraria-container)
+Docker Images
+	- [Docker Hub](https://hub.docker.com/r/taytom259/terraria)
+	- [Github Packages](https://github.com/taytom258/terraria-container/pkgs/container/terraria-container)
+	
+Github Repository
+	- [Github](https://github.com/taytom258/terraria-container)
 
 ## Usage (Initial Interactive Mode)
 
@@ -17,7 +20,7 @@ docker run --rm -it \
     -e TYPE=vanilla \
     -v $HOME/terraria/config:/config \
     --name=terraria \
-    docker.io/taytom259/terraria:latest
+    ghcr.io/taytom258/terraria-container
 ```
 
 After the initial world generation you can specify the world by specifying the .wld file within an environment variable.
@@ -40,12 +43,13 @@ docker run --rm \
     -e TYPE=vanilla \
     -v $HOME/terraria/config:/config \
     --name=terraria \
-    docker.io/taytom259/terraria:latest
+    ghcr.io/taytom258/terraria-container
 ```
 
 ## Supported tags
-[vanilla-latest] [latest] - Vanilla Server<br/>
-[vanilla-dev] - Vanilla Development - Bleeding edge, more than likely broken!
+[edge] [latest] - Latest Server Build<br/>
+[v1.0.0] - Server Release 1.0.0
+[dev] - Server Development Build - Bleeding edge, more than likely broken!
 
 ## Docker Compose Example
 ```
@@ -53,7 +57,7 @@ name: terraria-container
 
 services:
   terraria:
-    image: docker.io/taytom259/terraria:latest
+    image: ghcr.io/taytom258/terraria-container
     ports:
       - "7777:7777"
     environment:
