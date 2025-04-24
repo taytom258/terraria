@@ -5,6 +5,10 @@ on:
     branches:
       - 'main'
       - 'dev'
+    paths:
+      - 'run.sh'
+      - 'Dockerfile'
+      - 'AutoBuild.yml'
   pull_request:
 
 env:
@@ -48,7 +52,7 @@ jobs:
 
       - name: Test
         run: |
-          docker run --rm ${{ env.TEST_TAG }}
+          docker run -it --rm ${{ env.TEST_TAG }}
           
       - name: Docker Meta - Main
         if: github.ref_name == 'main'
