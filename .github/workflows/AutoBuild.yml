@@ -85,6 +85,7 @@ jobs:
             dev
 
       - name: Build and push - main
+        if: github.ref_name == 'main' || github.ref_type == 'tag'
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64
@@ -93,6 +94,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
       
       - name: Build and push - dev
+        if: github.ref_name == 'dev'
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64
