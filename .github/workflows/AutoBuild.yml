@@ -73,7 +73,7 @@ jobs:
 
       - name: Docker Meta - dev
         if: github.ref_name == 'dev'
-        id: meta-other
+        id: meta-dev
         uses: docker/metadata-action@v5
         with:
           flavor: |
@@ -84,10 +84,18 @@ jobs:
           tags: |
             dev
 
-      - name: Build and Push
+      - name: Build and push - main
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      
+      - name: Build and push - dev
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/amd64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta-dev.outputs.tags }}
+          labels: ${{ steps.meta-dev.outputs.labels }}
