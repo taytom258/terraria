@@ -47,17 +47,17 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build test
+      - name: Build test image
         uses: docker/build-push-action@v6
         with:
           load: true
           tags: ${{ env.TEST_TAG }}
 
-      - name: Test
+      - name: Test vanilla server
         run: |
           docker run -e WORLD=/opt/terraria/test.wld -e TEST=true --rm ${{ env.TEST_TAG }}
           
-      - name: Docker Meta - Main
+      - name: Docker Meta - main
         if: github.ref_name == 'main' || github.ref_type == 'tag'
         id: meta
         uses: docker/metadata-action@v5
@@ -71,11 +71,13 @@ jobs:
             latest
             type=semver,pattern={{version}}
 
-      - name: Docker Meta - Dev
+      - name: Docker Meta - dev
         if: github.ref_name == 'dev'
         id: meta-other
         uses: docker/metadata-action@v5
         with:
+          flavor: |
+            latest=false
           images: |
             ${{ vars.DOCKERHUB_OWNER }}/${{ vars.REPOSITORY }}
             ghcr.io/${{ github.repository }}

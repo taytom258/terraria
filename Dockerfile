@@ -16,14 +16,14 @@ RUN apt-get update && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /config /opt/terraria/server /tmp/terraria && \
+RUN mkdir -p /data/config /data/worlds /data/logs /opt/terraria/server /tmp/terraria && \
 	userdel -f ubuntu && \
 	useradd -m -s /bin/bash -k /etc/ske1/ -u $PUID terraria
 
 COPY --chown=$PUID:$PGID --chmod=751 scripts/run.sh /opt/terraria/run.sh
 COPY --chown=$PUID:$PGID --chmod=751 files/test.wld /opt/terraria/test.wld
 
-VOLUME ["/config"]
+VOLUME ["/data"]
 
 WORKDIR /opt/terraria/server
 

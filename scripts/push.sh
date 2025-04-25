@@ -7,5 +7,5 @@ if [ -z "$1" ]
   else
     git commit -m "$1"
 fi
-git push origin
-git push origin --tags
+git push
+git push --tags

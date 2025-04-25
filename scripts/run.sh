@@ -1,7 +1,7 @@
 #!/bin/bash
 
 date=`date +"%Y-%m-%d-%H%M"`
-serverARGS="-config /config/serverconfig.txt -banlist /config/banlist.txt"
+serverARGS="-config /data/config/serverconfig.txt -banlist /data/config/banlist.txt"
 serverURL=https://terraria.org/api/download/pc-dedicated-server/terraria-server-$VERSION.zip
 
 if [ "$(id -u)" = 0 ]; then
@@ -36,17 +36,33 @@ if [ "$(id -u)" = 0 ]; then
 		cp /tmp/terraria/$VERSION/Windows/serverconfig.txt /opt/terraria/server/serverconfig.default && \
 		sed -in '/#maxplayers=.*/c\maxplayers=16' /opt/terraria/server/serverconfig.default && \
 		sed -in '/#port=.*/c\port='$SERVER_PORT'' /opt/terraria/server/serverconfig.default && \
-		sed -in '/#worldpath=.*/c\worldpath=/config/' /opt/terraria/server/serverconfig.default && \
+		sed -in '/#worldpath=.*/c\worldpath=/data/worlds/' /opt/terraria/server/serverconfig.default && \
 		rm -rf /tmp/* /opt/terraria/server/*.defaultn
 		touch /opt/terraria/$VERSION.ver
 	fi
 
-	if [ ! -f "/config/serverconfig.txt" ]; then
-		cp ./serverconfig.default /config/serverconfig.txt
+	if [ ! -f "/data/config/serverconfig.txt" ]; then
+		if [ -f "/data/serverconfig.txt" ]; then
+			mv /data/serverconfig.txt /data/config/serverconfig.txt
+		else
+			cp ./serverconfig.default /data/config/serverconfig.txt
+		fi
 	fi
 
-	if [ ! -f "/config/banlist.txt" ]; then
-		touch /config/banlist.txt
+	if [ ! -f "/data/config/banlist.txt" ]; then
+		if [ -f "/data/banlist.txt" ]; then
+			mv /data/banlist.txt /data/config/banlist.txt
+		else
+			touch /data/config/banlist.txt
+		fi
+	fi
+	
+	if [ -f "/data/*.log" ]; then
+		mv /data/*.log /data/logs/
+	fi
+	
+	if [ -f "/data/*.wld" ]; then
+		mv /data/*.wld /data/worlds/
 	fi
 
 	if [ -n "$WORLD" ]; then
@@ -55,14 +71,14 @@ if [ "$(id -u)" = 0 ]; then
 		serverARGS="$serverARGS $@"
 	fi
 
-	chown -R ${runAsUser}:${runAsGroup} /config /opt/terraria
+	chown -R ${runAsUser}:${runAsGroup} /data /opt/terraria
 	chmod +x /opt/terraria/server/TerrariaServer*
-	chmod -R g+w /config
+	chmod -R g+w /data
 
 	if [ -z "$WORLD" ]; then
-		su -c "screen -mS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
+		su -c "screen -mS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
 	else
-		su -c "screen -dmS terra -L -Logfile /config/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
+		su -c "screen -dmS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
 
 		sleep 5
 		if ! screen -list | grep -q "terra"; then
@@ -76,6 +92,7 @@ if [ "$(id -u)" = 0 ]; then
 		fi
 		
 		trap "touch /root/sigterm" SIGTERM
+		tail -f /data/logs/server.$date.log
 		while [ ! -e /root/sigterm ]; do sleep 1; done
 		su -c 'screen -S terra -p 0 -X stuff 'exit^M'' terraria
 		echo -e 'SIGTERM Caught'
