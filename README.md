@@ -16,6 +16,10 @@ Docker Images<br/>
 Github Repository<br/>
 [Github](https://github.com/taytom258/terraria-container)
 
+> [!NOTE]
+> Try not to run your server in the interactive mode, only use the initial interactive mode to create the world.
+> Running your server interactively disables the autosave on exit functionality. You have been warned!
+
 ## Usage (Initial Interactive Mode)
 
 Your initial start of the server you will have to create a world. Follow the prompts.
