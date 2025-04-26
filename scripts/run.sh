@@ -42,6 +42,7 @@ if [ "$(id -u)" = 0 ]; then
 		exit 2
 	fi
 	
+	VERSION=$(echo $VERSION | sed 's/v//' | sed 's/\.//g')
 	serverURL="$serverURL/terraria-server-$VERSION.zip"
 	
 	if [[ $TEST ]]; then
@@ -67,14 +68,14 @@ if [ "$(id -u)" = 0 ]; then
 # Download and create TShock directories, if required
 	if [[ ! -e /opt/terraria/$TSVERSION.ver && "$TYPE" == "tshock" ]]; then
 		if [[ "$TSVERSION" == "latest" ]]; then
-			TSVERSION=$(curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | jq -r .tag_name)
+			TSVERSIONexv=$(curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | jq -r .tag_name)
 		fi
 		
+		TSVERSION=$(echo $TSVERSIONex | sed 's/v//' | sed 's/\.//g')
+		TSVERSIONex=$(echo $TSVERSIONexv | sed 's/v//')
 		VERSIONex=$(echo $VERSION | sed 's/./.&/2g')
-		TSVERSIONex=$(echo $TSVERSION | sed 's/./.&/2g')
-		TSVERSIONre=$(echo $TSVERSION | sed 's/v//' | sed 's/\.//g')
 		
-		tshockURL=$tshockURL/v$TSVERSIONex/TShock-$TSVERSIONex-for-Terraria-$VERSIONex-linux-amd64-Release.zip		
+		tshockURL=$tshockURL/$TSVERSIONexv/TShock-$TSVERSIONex-for-Terraria-$VERSIONex-linux-amd64-Release.zip		
 		mkdir -p /tmp/tshock /opt/terraria /data/config/tshock /data/plugins
 		curl -sLo /tmp/tshock/tshock.zip $tshockURL
 		
@@ -88,7 +89,7 @@ if [ "$(id -u)" = 0 ]; then
 		tar -xf /tmp/tshock/tshock.tar -C /opt/terraria/server
 		rm -rf /tmp/*
 		
-		$serverARGS="$TSserverARGS"
+		serverARGS=$TSserverARGS
 		touch /opt/terraria/$TSVERSION.ver
 	fi
 	
