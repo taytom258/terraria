@@ -95,13 +95,13 @@ if [ "$(id -u)" = 0 ]; then
 		CMD="screen -mS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS"
 		echo starting...
 		echo $CMD
-		screen -ls
+		su -c "screen -list" ${runAsUser}
 	else
 		su -c "screen -dmS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS" ${runAsUser}
 		CMD="screen -dmS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS"
 		echo starting...
 		echo $CMD
-		screen -ls
+		su -c "screen -list" ${runAsUser}
 
 		sleep 5
 		if [[ $(screen -list | grep -q "terra") ]]; then
@@ -111,8 +111,10 @@ if [ "$(id -u)" = 0 ]; then
 			fi
 		else
 			echo -e 'Server failed to start'
-			/bin/bash
-			#exit 3
+			ls -al /opt/terraria/
+			ls -al /opt/terraria/server/
+			ls -al /data/
+			exit 3
 		fi
 		
 		trap "touch /root/sigterm" SIGTERM
