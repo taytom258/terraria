@@ -110,7 +110,7 @@ if [ "$(id -u)" = 0 ]; then
 		fi
 
 		sleep $TESTDELAY
-		if [[ $(screen -list | grep -c "terra") -eq 1 ]]; then
+		if [[ $(su -c "screen -list" ${runAsUser} | grep -c "terra") -eq 1 ]]; then
 			echo -e 'Server started [TerrariaServer -x64 '$serverARGS']'
 			if [[ $TEST ]]; then
 				exit 0
