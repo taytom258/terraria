@@ -13,7 +13,7 @@ EXPOSE $SERVER_PORT/udp
 
 RUN apt-get update && \
 	apt-get -y upgrade && \
-	apt-get -y install unzip tzdata screen curl jq && \
+	apt-get -y install unzip tzdata screen curl jq libicu74 && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/*
 
