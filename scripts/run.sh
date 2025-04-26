@@ -2,8 +2,8 @@
 
 date=`date +"%Y-%m-%d-%H%M"`
 serverARGS="-config /data/config/serverconfig.txt -banlist /data/config/banlist.txt"
-serverURL=https://terraria.org/api/download/pc-dedicated-server/terraria-server-$VERSION.zip
 updateURL=https://terraria.org/api/get/dedicated-servers-names
+serverURL=https://terraria.org/api/download/pc-dedicated-server
 
 if [ "$(id -u)" = 0 ]; then
 	runAsUser=terraria
@@ -32,10 +32,15 @@ if [ "$(id -u)" = 0 ]; then
 	HTTPCODE=$(curl -sI https://terraria.org | awk '/HTTP\/[0-9.]+/{print $2}')
 	if [[ "$VERSION" == "latest" && $HTTPCODE -eq 200 ]]; then
 		VERSION=$(curl -s $updateURL | grep -Po -e '\d+' | head -1)
+		echo $VERSION
 	elif [[ $HTTPCODE -ne 200 ]]; then
 		echo Terraria.org is unreachable, is it down?
 		exit 2
 	fi
+	
+	serverURL="$serverURL/terraria-server-$VERSION.zip"
+	echo $VERSION
+	echo $serverURL
 	
 	if [[ ! -e /opt/terraria/$VERSION.ver ]]; then
 		rm -rf /opt/terraria/server/*
