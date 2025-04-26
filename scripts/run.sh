@@ -185,11 +185,11 @@ if [ "$(id -u)" = 0 ]; then
 			if [[ $TEST ]]; then
 				cat /data/logs/server.$date.sclog
 				echo [/opt/terraria]
-				ls -al /opt/terraria/
+				ls -al /opt/terraria
 				echo [/opt/terraria/server]
-				ls -al /opt/terraria/server/
+				ls -al /opt/terraria/server
 				echo [/data]
-				ls -al /data/
+				ls -al /data
 				echo [/data/config]
 				ls -al /data/config
 				echo [/data/logs]
