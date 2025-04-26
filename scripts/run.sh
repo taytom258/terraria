@@ -87,14 +87,14 @@ if [ "$(id -u)" = 0 ]; then
 	chmod -R g+w /data
 
 	if [ -z "$WORLD" ]; then
-		su -c "screen -mS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
-		CMD="screen -mS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'"
+		su -c "screen -mS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS" ${runAsUser}
+		CMD="screen -mS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS"
 		echo starting...
 		echo $CMD
 		screen -ls
 	else
-		su -c "screen -dmS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
-		CMD="screen -dmS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'"
+		su -c "screen -dmS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS" ${runAsUser}
+		CMD="screen -dmS terra -L -Logfile /data/logs/server.\$date.log ./TerrariaServer -x64 $serverARGS"
 		echo starting...
 		echo $CMD
 		screen -ls
