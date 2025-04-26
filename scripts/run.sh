@@ -46,7 +46,7 @@ if [ "$(id -u)" = 0 ]; then
 	
 	if [[ $TEST ]]; then
 		echo [Test] Downloading vanilla...
-		echo $VERSION
+		echo Version [$VERSION] from
 		echo $serverURL
 	fi
 
@@ -67,7 +67,7 @@ if [ "$(id -u)" = 0 ]; then
 # Download and create TShock directories, if required
 	if [[ ! -e /opt/terraria/$TSVERSION.ver && "$TYPE" == "tshock" ]]; then
 		if [[ "$TSVERSION" == "latest" ]]; then
-			$TSVERSION=$(curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | jq -r .tag_name)
+			TSVERSION=$(curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | jq -r .tag_name)
 		fi
 		
 		VERSIONex=$(echo $VERSION | sed 's/./.&/2g')
@@ -94,7 +94,7 @@ if [ "$(id -u)" = 0 ]; then
 	
 	if [[ $TEST && "$TYPE" == "tshock" ]]; then
 		echo [Test] Downloading tshock...
-		echo $TSVERSION
+		echo Version [$TSVERSION] from
 		echo $tshockURL
 	fi
 
