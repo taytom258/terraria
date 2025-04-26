@@ -34,25 +34,21 @@ if [ "$(id -u)" = 0 ]; then
 	fi
 	
 # Check what latest vanilla version is and set it as the VERSION
-	HTTPCODE=$(curl -sI https://terraria.org | awk '/HTTP\/[0-9.]+/{print $2}')
-	if [[ "$VERSION" == "latest" && $HTTPCODE -eq 200 ]]; then
-		VERSION=$(curl -s $updateURL | grep -Po -e '\d+' | head -1)
-	elif [[ $HTTPCODE -ne 200 ]]; then
-		echo Terraria.org is unreachable, is it down?
-		exit 2
-	fi
-	
-	VERSION=$(echo $VERSION | sed 's/v//' | sed 's/\.//g')
-	serverURL="$serverURL/terraria-server-$VERSION.zip"
-	
-	if [[ $TEST ]]; then
-		echo [Test] Downloading vanilla...
-		echo Version [$VERSION] from
-		echo $serverURL
+	if [[ "$TYPE" == "vanilla" ]]; then
+		HTTPCODE=$(curl -sI https://terraria.org | awk '/HTTP\/[0-9.]+/{print $2}')
+		if [[ "$VERSION" == "latest" && $HTTPCODE -eq 200 ]]; then
+			VERSION=$(curl -s $updateURL | grep -Po -e '\d+' | head -1)
+		elif [[ $HTTPCODE -ne 200 ]]; then
+			echo Terraria.org is unreachable, is it down?
+			exit 2
+		fi
+		
+		VERSION=$(echo $VERSION | sed 's/v//' | sed 's/\.//g')
+		serverURL="$serverURL/terraria-server-$VERSION.zip"
 	fi
 
-# Download server and create default config file
-	if [[ ! -e /opt/terraria/$VERSION.ver ]]; then
+# Download vanilla server and create default config file
+	if [[ ! -e /opt/terraria/$VERSION.ver && "$TYPE" == "vanilla" ]]; then
 		rm -rf /opt/terraria/server/*
 		curl -sLo /tmp/terraria/server.zip $serverURL
 		unzip -qd /tmp/terraria/ /tmp/terraria/server.zip && \
@@ -63,16 +59,23 @@ if [ "$(id -u)" = 0 ]; then
 		sed -in '/#worldpath=.*/c\worldpath=/data/worlds/' /opt/terraria/server/serverconfig.default && \
 		rm -rf /tmp/* /opt/terraria/server/*.defaultn
 		touch /opt/terraria/$VERSION.ver
+		chmod +x /opt/terraria/server/TerrariaServer*
+		
+		if [[ $TEST ]]; then
+			echo [Test] Downloading vanilla...
+			echo Version [$VERSION] from
+			echo $serverURL
+		fi
 	fi
 	
-# Download and create TShock directories, if required
+# Download TShock and create directories
 	if [[ ! -e /opt/terraria/$TSVERSION.ver && "$TYPE" == "tshock" ]]; then
 		if [[ "$TSVERSION" == "latest" ]]; then
 			TSVERSIONexv=$(curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | jq -r .tag_name)
 		fi
 		
-		TSVERSION=$(echo $TSVERSIONex | sed 's/v//' | sed 's/\.//g')
 		TSVERSIONex=$(echo $TSVERSIONexv | sed 's/v//')
+		TSVERSION=$(echo $TSVERSIONex | sed 's/v//' | sed 's/\.//g')
 		VERSIONex=$(echo $VERSION | sed 's/./.&/2g')
 		
 		tshockURL=$tshockURL/$TSVERSIONexv/TShock-$TSVERSIONex-for-Terraria-$VERSIONex-linux-amd64-Release.zip		
@@ -138,7 +141,6 @@ if [ "$(id -u)" = 0 ]; then
 
 # Giving ownership to built-in user
 	chown -R ${runAsUser}:${runAsGroup} /data /opt/terraria
-	chmod +x /opt/terraria/server/TerrariaServer*
 	chmod -R g+w /data
 
 # Starting the server
@@ -167,6 +169,7 @@ if [ "$(id -u)" = 0 ]; then
 		
 		if [[ $TEST ]]; then
 			echo [Test] Starting...
+			echo Args [$serverARGS]
 			su -c "screen -list" ${runAsUser}
 		fi
 
@@ -181,11 +184,11 @@ if [ "$(id -u)" = 0 ]; then
 		else
 			echo -e 'Server failed to start'
 			if [[ $TEST ]]; then
-				echo [/opt/terraria/]
+				echo [/opt/terraria]
 				ls -al /opt/terraria/
-				echo [/opt/terraria/server/]
+				echo [/opt/terraria/server]
 				ls -al /opt/terraria/server/
-				echo [/data/]
+				echo [/data]
 				ls -al /data/
 				echo [/data/config]
 				ls -al /data/config
