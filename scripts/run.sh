@@ -156,7 +156,7 @@ if [ "$(id -u)" = 0 ]; then
 		fi
 	else
 		if [ "$TYPE" == "tshock" ]; then
-			if [ -d /opt/terraria/dotnet ]; then
+			if [ -d /opt/terraria/server/dotnet ]; then
 				su -c "screen -dmS terra ./TShock.Server -x64 $serverARGS" ${runAsUser}
 			else
 				su -c "screen -dmS terra ./TShock.Installer -x64 $serverARGS" ${runAsUser}
@@ -169,12 +169,12 @@ if [ "$(id -u)" = 0 ]; then
 			echo [Test] Starting...
 			echo Args [$serverARGS]
 			su -c "screen -list" ${runAsUser}
-			su -c "screen -S terra -p 0 -X hardcopy" ${runAsUser}
 		fi
 
 # Testing if server is 'running'
 		sleep $SCRDELAY
 		screenTest=$(su -c "screen -list" ${runAsUser} | grep -c "\.terra")
+		su -c "screen -S terra -p 0 -X hardcopy" ${runAsUser}
 		if [ $screenTest -gt 0 ]; then
 			echo -e "Server started with args [$serverARGS]"
 			if [[ $TEST ]]; then
@@ -183,7 +183,7 @@ if [ "$(id -u)" = 0 ]; then
 		else
 			echo -e 'Server failed to start'
 			if [[ $TEST ]]; then
-				cat /opt/terraria/hardcopy.0
+				cat /opt/terraria/server/hardcopy.0
 				echo [/opt/terraria]
 				ls -al /opt/terraria/
 				echo [/opt/terraria/server]
