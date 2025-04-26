@@ -1,6 +1,6 @@
 FROM ubuntu:noble
 
-ENV PUID=1000 PGID=1000 VERSION=latest TYPE=vanilla SERVER_PORT=7777 SIGDELAY=2 SCRDELAY=5
+ENV PUID=1000 PGID=1000 VERSION=latest TSVERSION=latest TYPE=vanilla SERVER_PORT=7777 SIGDELAY=2 SCRDELAY=5
 
 LABEL org.opencontainers.image.source=https://github.com/taytom258/terraria-container
 LABEL org.opencontainers.image.title=terraria-container

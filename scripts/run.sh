@@ -45,7 +45,7 @@ if [ "$(id -u)" = 0 ]; then
 	serverURL="$serverURL/terraria-server-$VERSION.zip"
 	
 	if [[ $TEST ]]; then
-		echo [Test] Downloading...
+		echo [Test] Downloading vanilla...
 		echo $VERSION
 		echo $serverURL
 	fi
@@ -74,7 +74,7 @@ if [ "$(id -u)" = 0 ]; then
 		TSVERSIONex=$(echo $TSVERSION | sed 's/./.&/2g')
 		TSVERSIONre=$(echo $TSVERSION | sed 's/v//' | sed 's/\.//g')
 		
-		tshockURL=$tshockURL/v$TSVERSIONex/TShock-$TSVERSIONex-for-Terraria-$VERSIONex-linux-amd64-Release.zip
+		tshockURL=$tshockURL/v$TSVERSIONex/TShock-$TSVERSIONex-for-Terraria-$VERSIONex-linux-amd64-Release.zip		
 		mkdir -p /tmp/tshock /opt/terraria /data/config/tshock /data/plugins
 		curl -sLo /tmp/tshock/tshock.zip $tshockURL
 		
@@ -90,6 +90,12 @@ if [ "$(id -u)" = 0 ]; then
 		
 		$serverARGS="$TSserverARGS"
 		touch /opt/terraria/$TSVERSION.ver
+	fi
+	
+	if [[ $TEST && "$TYPE" == "tshock" ]]; then
+		echo [Test] Downloading tshock...
+		echo $TSVERSION
+		echo $tshockURL
 	fi
 
 # Checking exsistence of config and world files
@@ -177,6 +183,7 @@ if [ "$(id -u)" = 0 ]; then
 				ls -al /opt/terraria/
 				ls -al /opt/terraria/server/
 				ls -al /data/
+				ls -al /data/config
 			fi
 			exit 3
 		fi
