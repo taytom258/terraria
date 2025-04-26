@@ -145,30 +145,30 @@ if [ "$(id -u)" = 0 ]; then
 	
 	if [ -z "$WORLD" ]; then
 		if [ "$TYPE" == "tshock" ]; then
-			if [ -d /opt/terraria/dotnet ]; then
-				su -c "screen -mS terra ./TShock.Server -x64 $serverARGS" ${runAsUser}
+			if [ -d /opt/terraria/server/dotnet ]; then
+				su -c "screen -mS terra -L -Logfile /data/logs/server.$date.sclog ./TShock.Server -x64 $serverARGS" ${runAsUser}
 			else
-				su -c "screen -mS terra ./TShock.Installer -x64 $serverARGS" ${runAsUser}
+				su -c "screen -mS terra -L -Logfile /data/logs/server.$date.sclog ./TShock.Installer -x64 $serverARGS" ${runAsUser}
 				DOTNET_ROOT=/opt/terraria/server/dotnet
 			fi
 		elif [ "$TYPE" == "vanilla" ]; then
-			su -c "screen -mS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS" ${runAsUser}
+			su -c "screen -mS terra -L -Logfile /data/logs/server.$date.sclog ./TerrariaServer -x64 $serverARGS" ${runAsUser}
 		fi
 	else
 		if [ "$TYPE" == "tshock" ]; then
 			if [ -d /opt/terraria/server/dotnet ]; then
-				su -c "screen -dmS terra ./TShock.Server -x64 $serverARGS" ${runAsUser}
+				su -c "screen -dmS terra -L -Logfile /data/logs/server.$date.sclog ./TShock.Server -x64 $serverARGS" ${runAsUser}
 			else
-				su -c "screen -dmS terra ./TShock.Installer -x64 $serverARGS" ${runAsUser}
+				su -c "screen -dmS terra -L -Logfile /data/logs/server.$date.sclog ./TShock.Installer -x64 $serverARGS" ${runAsUser}
+				DOTNET_ROOT=/opt/terraria/server/dotnet
 			fi
 		elif [ "$TYPE" == "vanilla" ]; then
-			su -c "screen -dmS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS" ${runAsUser}
+			su -c "screen -dmS terra -L -Logfile /data/logs/server.$date.sclog ./TerrariaServer -x64 $serverARGS" ${runAsUser}
 		fi
 		
 		if [[ $TEST ]]; then
 			echo [Test] Starting...
 			echo Args [$serverARGS]
-			su -c "screen -S terra -p 0 -X hardcopy" ${runAsUser}
 			su -c "screen -list" ${runAsUser}
 		fi
 
@@ -183,7 +183,7 @@ if [ "$(id -u)" = 0 ]; then
 		else
 			echo -e 'Server failed to start'
 			if [[ $TEST ]]; then
-				cat /opt/terraria/server/hardcopy.0
+				cat /data/logs/server.$date.sclog
 				echo [/opt/terraria]
 				ls -al /opt/terraria/
 				echo [/opt/terraria/server]
