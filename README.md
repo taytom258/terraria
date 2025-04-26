@@ -30,7 +30,7 @@ docker run --rm -it \
     -e PUID=1000 \
     -e PGID=1000 \
     -e TZ=America/New_York \
-    -e VERSION=1449 \
+    -e VERSION=latest \
     -e TYPE=vanilla \
     -v $HOME/terraria:/data \
     --name=terraria \
@@ -53,7 +53,7 @@ docker run --rm \
     -e PGID=1000 \
     -e WORLD=/config/world.wld \
     -e TZ=America/New_York \
-    -e VERSION=1449 \
+    -e VERSION=latest \
     -e TYPE=vanilla \
     -v $HOME/terraria:/data \
     --name=terraria \
@@ -79,7 +79,7 @@ services:
       - PGID=1000
       - WORLD=/data/worlds/world.wld
       - TZ=America/New_York
-      - VERSION=1449
+      - VERSION=latest
       - TYPE=vanilla
     volumes:
       - $HOME/terraria:/data

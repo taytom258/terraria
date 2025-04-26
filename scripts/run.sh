@@ -1,10 +1,12 @@
 #!/bin/bash
 
+# Set Variables
 date=`date +"%Y-%m-%d-%H%M"`
 serverARGS="-config /data/config/serverconfig.txt -banlist /data/config/banlist.txt"
 updateURL=https://terraria.org/api/get/dedicated-servers-names
 serverURL=https://terraria.org/api/download/pc-dedicated-server
 
+# Check current user and adjust built-in user:group to match
 if [ "$(id -u)" = 0 ]; then
 	runAsUser=terraria
 	runAsGroup=terraria
@@ -29,6 +31,7 @@ if [ "$(id -u)" = 0 ]; then
 		fi
 	fi
 	
+# Check what latest vanilla version is and set it as the VERSION
 	HTTPCODE=$(curl -sI https://terraria.org | awk '/HTTP\/[0-9.]+/{print $2}')
 	if [[ "$VERSION" == "latest" && $HTTPCODE -eq 200 ]]; then
 		VERSION=$(curl -s $updateURL | grep -Po -e '\d+' | head -1)
@@ -44,7 +47,8 @@ if [ "$(id -u)" = 0 ]; then
 		echo $VERSION
 		echo $serverURL
 	fi
-	
+
+# Download server and create default config file
 	if [[ ! -e /opt/terraria/$VERSION.ver ]]; then
 		rm -rf /opt/terraria/server/*
 		curl -so /tmp/terraria/server.zip $serverURL
@@ -58,6 +62,7 @@ if [ "$(id -u)" = 0 ]; then
 		touch /opt/terraria/$VERSION.ver
 	fi
 
+# Checking existance of config and world files
 	if [ ! -f "/data/config/serverconfig.txt" ]; then
 		if [ -f "/data/serverconfig.txt" ]; then
 			mv /data/serverconfig.txt /data/config/serverconfig.txt
@@ -82,16 +87,19 @@ if [ "$(id -u)" = 0 ]; then
 		mv /data/*.wld /data/worlds/
 	fi
 
+# Determining world file based on variable
 	if [ -n "$WORLD" ]; then
 		serverARGS="$serverARGS -world $WORLD $@"
 	else
 		serverARGS="$serverARGS $@"
 	fi
 
+# Giving ownership to built-in user
 	chown -R ${runAsUser}:${runAsGroup} /data /opt/terraria
 	chmod +x /opt/terraria/server/TerrariaServer*
 	chmod -R g+w /data
 
+# Starting the server
 	if [ -z "$WORLD" ]; then
 		su -c "screen -mS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS" ${runAsUser}
 		if [[ $TEST ]]; then
@@ -109,6 +117,7 @@ if [ "$(id -u)" = 0 ]; then
 			su -c "screen -list" ${runAsUser}
 		fi
 
+# Testing if server is 'running'
 		sleep $SCRDELAY
 		screenTest=$(su -c "screen -list" ${runAsUser} | grep -c "terra")
 		if [ $screenTest -gt 0 ]; then
@@ -127,6 +136,7 @@ if [ "$(id -u)" = 0 ]; then
 			exit 3
 		fi
 		
+# Setup save on quit functionality
 		trap "touch /root/sigterm" SIGTERM
 		while [ ! -e /root/sigterm ]; do sleep 1; done
 		su -c 'screen -S terra -p 0 -X stuff 'exit^M'' terraria
