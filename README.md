@@ -41,8 +41,8 @@ After the initial world generation you can declare the world by specifying the p
 Remember to set your settings in the serverconfig.txt located within the /config directory.
 
 > [!CAUTION]
-> Do not run your server in the interactive mode, only use the initial interactive mode to create the world.<br/>
-> Running your server interactively disables the autosave on exit functionality. You have been warned!
+> Do not run your server in interactive mode, only use the interactive mode to create your world.<br/>
+> Running your server interactively disables the autosave on shutdown functionality. You have been warned!
 
 ## Usage (Headless Autostart Mode)
 Logs & worlds are stored within the /config directory
