@@ -91,9 +91,8 @@ if [ "$(id -u)" = 0 ]; then
 		
 		serverARGS=$TSserverARGS
 		touch /opt/terraria/$TSVERSION.ver
-	fi
-	
-	if [[ $TEST && "$TYPE" == "tshock" ]]; then
+		
+		if [[ $TEST ]]; then
 		echo [Test] Downloading tshock...
 		echo Version [$TSVERSION] from
 		echo $tshockURL
@@ -181,10 +180,17 @@ if [ "$(id -u)" = 0 ]; then
 		else
 			echo -e 'Server failed to start'
 			if [[ $TEST ]]; then
+				echo [/opt/terraria/]
 				ls -al /opt/terraria/
+				echo [/opt/terraria/server/]
 				ls -al /opt/terraria/server/
+				echo [/data/]
 				ls -al /data/
+				echo [/data/config]
 				ls -al /data/config
+				echo [/data/logs]
+				ls -al /data/logs
+				cat /data/logs/*.log
 			fi
 			exit 3
 		fi
