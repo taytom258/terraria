@@ -118,15 +118,15 @@ if [ "$(id -u)" = 0 ]; then
 	fi
 
 # v1.0.0 to v1.1.0 file movements
-	if [ -f "/data/*.txt" ]; then
+	if [[ ls /data/*.txt &>/dev/null ]]; then
 		mv /data/*.txt /data/config/
 	fi
 
-	if [ -f "/data/*.log" ]; then
+	if [[ ls /data/*.log &>/dev/null ]]; then
 		mv /data/*.log /data/logs/
 	fi
 	
-	if [ -f "/data/*wld*" ]; then
+	if [[ ls /data/*.wld &>/dev/null ]]; then
 		mv /data/*wld* /data/worlds/
 	fi
 
