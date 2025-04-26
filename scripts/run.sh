@@ -34,18 +34,16 @@ if [ "$(id -u)" = 0 ]; then
 	fi
 	
 # Check what latest vanilla version is and set it as the VERSION
-	if [[ "$TYPE" == "vanilla" ]]; then
-		HTTPCODE=$(curl -sI https://terraria.org | awk '/HTTP\/[0-9.]+/{print $2}')
-		if [[ "$VERSION" == "latest" && $HTTPCODE -eq 200 ]]; then
-			VERSION=$(curl -s $updateURL | grep -Po -e '\d+' | head -1)
-		elif [[ $HTTPCODE -ne 200 ]]; then
-			echo Terraria.org is unreachable, is it down?
-			exit 2
-		fi
-		
-		VERSION=$(echo $VERSION | sed 's/v//' | sed 's/\.//g')
-		serverURL="$serverURL/terraria-server-$VERSION.zip"
+	HTTPCODE=$(curl -sI https://terraria.org | awk '/HTTP\/[0-9.]+/{print $2}')
+	if [[ "$VERSION" == "latest" && $HTTPCODE -eq 200 ]]; then
+		VERSION=$(curl -s $updateURL | grep -Po -e '\d+' | head -1)
+	elif [[ $HTTPCODE -ne 200 ]]; then
+		echo Terraria.org is unreachable, is it down?
+		exit 2
 	fi
+	
+	VERSION=$(echo $VERSION | sed 's/v//' | sed 's/\.//g')
+	serverURL="$serverURL/terraria-server-$VERSION.zip"
 
 # Download vanilla server and create default config file
 	if [[ ! -e /opt/terraria/$VERSION.ver && "$TYPE" == "vanilla" ]]; then
@@ -54,7 +52,7 @@ if [ "$(id -u)" = 0 ]; then
 		unzip -qd /tmp/terraria/ /tmp/terraria/server.zip && \
 		cp -r /tmp/terraria/$VERSION/Linux/* /opt/terraria/server/ && \
 		cp /tmp/terraria/$VERSION/Windows/serverconfig.txt /opt/terraria/server/serverconfig.default && \
-		sed -in '/#maxplayers=.*/c\maxplayers=$MAXPLAYERS' /opt/terraria/server/serverconfig.default && \
+		sed -in '/#maxplayers=.*/c\maxplayers='$MAXPLAYERS'' /opt/terraria/server/serverconfig.default && \
 		sed -in '/#port=.*/c\port='$SERVER_PORT'' /opt/terraria/server/serverconfig.default && \
 		sed -in '/#worldpath=.*/c\worldpath=/data/worlds/' /opt/terraria/server/serverconfig.default && \
 		rm -rf /tmp/* /opt/terraria/server/*.defaultn
