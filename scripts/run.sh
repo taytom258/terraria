@@ -169,6 +169,7 @@ if [ "$(id -u)" = 0 ]; then
 			echo [Test] Starting...
 			echo Args [$serverARGS]
 			su -c "screen -list" ${runAsUser}
+			su -c "screen -S terra -p 0 -X hardcopy" ${runAsUser}
 		fi
 
 # Testing if server is 'running'
@@ -182,6 +183,7 @@ if [ "$(id -u)" = 0 ]; then
 		else
 			echo -e 'Server failed to start'
 			if [[ $TEST ]]; then
+				cat /opt/terraria/hardcopy.0
 				echo [/opt/terraria]
 				ls -al /opt/terraria/
 				echo [/opt/terraria/server]
@@ -192,7 +194,6 @@ if [ "$(id -u)" = 0 ]; then
 				ls -al /data/config
 				echo [/data/logs]
 				ls -al /data/logs
-				cat /data/logs/*.log
 			fi
 			exit 3
 		fi
