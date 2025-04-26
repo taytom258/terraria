@@ -87,9 +87,9 @@ if [ "$(id -u)" = 0 ]; then
 	chmod -R g+w /data
 
 	if [ -z "$WORLD" ]; then
-		su -c "screen -mUS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
+		su -c "screen -mS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
 	else
-		su -c "screen -dmUS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
+		su -c "screen -dmS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
 
 		sleep 5
 		if ! screen -list | grep -q "terra"; then
