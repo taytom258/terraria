@@ -103,7 +103,7 @@ if [ "$(id -u)" = 0 ]; then
 		fi
 		
 		trap "touch /root/sigterm" SIGTERM
-		tail -fs /data/logs/server.$date.log
+		tail -fs 1 /data/logs/server.$date.log
 		while [ ! -e /root/sigterm ]; do sleep 1; done
 		su -c 'screen -S terra -p 0 -X stuff 'exit^M'' terraria
 		echo -e 'SIGTERM Caught'
