@@ -39,6 +39,10 @@ if [ "$(id -u)" = 0 ]; then
 	
 	serverURL="$serverURL/terraria-server-$VERSION.zip"
 	
+	echo downloading...
+	echo $VERSION
+	echo $serverURL
+	
 	if [[ ! -e /opt/terraria/$VERSION.ver ]]; then
 		rm -rf /opt/terraria/server/*
 		curl -so /tmp/terraria/server.zip $serverURL
@@ -87,14 +91,14 @@ if [ "$(id -u)" = 0 ]; then
 	chmod -R g+w /data
 
 	if [ -z "$WORLD" ]; then
-		su -c "screen -mS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
-		CMD="screen -mS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'"
+		su -c "screen -mS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS" ${runAsUser}
+		CMD="screen -mS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS"
 		echo starting...
 		echo $CMD
 		screen -ls
 	else
-		su -c "screen -dmS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
-		CMD="screen -dmS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'"
+		su -c "screen -dmS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS" ${runAsUser}
+		CMD="screen -dmS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS"
 		echo starting...
 		echo $CMD
 		screen -ls
@@ -107,7 +111,8 @@ if [ "$(id -u)" = 0 ]; then
 			fi
 		else
 			echo -e 'Server failed to start'
-			exit 3
+			/bin/bash
+			#exit 3
 		fi
 		
 		trap "touch /root/sigterm" SIGTERM
