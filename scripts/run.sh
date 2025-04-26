@@ -39,9 +39,11 @@ if [ "$(id -u)" = 0 ]; then
 	
 	serverURL="$serverURL/terraria-server-$VERSION.zip"
 	
-	echo downloading...
-	echo $VERSION
-	echo $serverURL
+	if [[ $TEST ]]; then
+		echo [Test] Downloading...
+		echo $VERSION
+		echo $serverURL
+	fi
 	
 	if [[ ! -e /opt/terraria/$VERSION.ver ]]; then
 		rm -rf /opt/terraria/server/*
@@ -92,28 +94,34 @@ if [ "$(id -u)" = 0 ]; then
 
 	if [ -z "$WORLD" ]; then
 		su -c "screen -mS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS" ${runAsUser}
-		CMD="screen -mS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS"
-		echo starting...
-		echo $CMD
-		su -c "screen -list" ${runAsUser}
+		if [[ $TEST ]]; then
+			CMD="screen -mS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS"
+			echo [Test] Starting...
+			echo $CMD
+			su -c "screen -list" ${runAsUser}
+		fi
 	else
 		su -c "screen -dmS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS" ${runAsUser}
-		CMD="screen -dmS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS"
-		echo starting...
-		echo $CMD
-		su -c "screen -list" ${runAsUser}
+		if [[ $TEST ]]; then
+			CMD="screen -dmS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS"
+			echo [Test] Starting...
+			echo $CMD
+			su -c "screen -list" ${runAsUser}
+		fi
 
-		sleep 5
-		if [[ $(screen -list | grep -q "terra") ]]; then
+		sleep $TESTDELAY
+		if [[ $(screen -list | grep -c "terra") -eq 1 ]]; then
 			echo -e 'Server started [TerrariaServer -x64 '$serverARGS']'
 			if [[ $TEST ]]; then
 				exit 0
 			fi
 		else
 			echo -e 'Server failed to start'
-			ls -al /opt/terraria/
-			ls -al /opt/terraria/server/
-			ls -al /data/
+			if [[ $TEST ]]; then
+				ls -al /opt/terraria/
+				ls -al /opt/terraria/server/
+				ls -al /data/
+			fi
 			exit 3
 		fi
 		
@@ -122,7 +130,7 @@ if [ "$(id -u)" = 0 ]; then
 		su -c 'screen -S terra -p 0 -X stuff 'exit^M'' terraria
 		echo -e 'SIGTERM Caught'
 		rm -f /root/sigterm
-		sleep 2
+		sleep $SIGDELAY
 	fi
 	exit 0
 
