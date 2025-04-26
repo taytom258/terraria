@@ -21,7 +21,7 @@ Github Repository<br/>
 > Ensure you update your /config volume to the new /data volume
 > Script will copy over existing data if it exists to the proper folders.
 
-## Usage (Initial Interactive Mode)
+## Usage (Interactive Mode)
 
 Your initial start of the server you will have to create a world. Follow the prompts.
 ```
@@ -41,10 +41,10 @@ After the initial world generation you can declare the world by specifying the p
 Remember to set your settings in the serverconfig.txt located within the /config directory.
 
 > [!CAUTION]
-> Try not to run your server in the interactive mode, only use the initial interactive mode to create the world.
+> Do not run your server in the interactive mode, only use the initial interactive mode to create the world.
 > Running your server interactively disables the autosave on exit functionality. You have been warned!
 
-## Usage (Headless Daemon Mode)
+## Usage (Headless Autostart Mode)
 Logs & worlds are stored within the /config directory
 ```
 docker run --rm \
@@ -93,12 +93,14 @@ services:
 > The first non-root user within most linux distros is set to 1000 as the UID. This will typically allow you to edit the files produced by this container without issue.
 > If you however change the default UID or GID using these environment variables, make sure your user, and also the owner of the bind mount files, are able to access the files.
 
+* `TYPE` - Server type to run [vanilla or tshock]
+* `VERSION` - Vanilla server version to run - latest or [Version](https://terraria.wiki.gg/wiki/Server#Downloads)
+* 'TSVERSION' - TShock server version to run - Only active with TYPE=tshock - latest or [Version](https://github.com/Pryaxis/TShock/releases)
+* `WORLD` - World file name as located within /config
+* 'MAXPLAYERS' - Maximum amount of players allowed on the server
 * `PUID` - User ID of account running server within the container
 * `PGID` - Group ID of account running server within the container
-* `WORLD` - World file name as located within /config
 * `TZ` - Timezone to set for proper log times - [TZ Table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
-* `VERSION` - Vanilla server version to run - latest or [Version](https://terraria.wiki.gg/wiki/Server#Downloads)
-* `TYPE` - Server type to run, currently only vanilla
 
 ## Additional Features
 

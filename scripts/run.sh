@@ -126,8 +126,8 @@ if [ "$(id -u)" = 0 ]; then
 		mv /data/*.log /data/logs/
 	fi
 	
-	if [ -f "/data/*.wld" ]; then
-		mv /data/*.wld /data/worlds/
+	if [ -f "/data/*wld*" ]; then
+		mv /data/*wld* /data/worlds/
 	fi
 
 # Determining world file based on variable
