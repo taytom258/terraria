@@ -1,7 +1,7 @@
 # Terraria Containerized
 
 [![AutoBuild](https://github.com/taytom258/terraria-container/actions/workflows/AutoBuild.yml/badge.svg?branch=main)](https://github.com/taytom258/terraria-container/actions/workflows/AutoBuild.yml)
-![GitHub commits since tagged version](https://img.shields.io/github/commits-since/taytom258/terraria-container/v1.0.0)
+![GitHub commits since tagged version](https://img.shields.io/github/commits-since/taytom258/terraria-container/v1.1.0)
 ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/taytom259/terraria-container/latest)
 ![Docker Pulls](https://img.shields.io/docker/pulls/taytom259/terraria-container)
 ![Docker Stars](https://img.shields.io/docker/stars/taytom259/terraria-container)
@@ -17,13 +17,13 @@ Github Repository<br/>
 [Github](https://github.com/taytom258/terraria-container)
 
 > [!NOTE]
-> Updating from 1.0.0 to 1.1.0
-> Ensure you update your /config volume to the new /data volume
+> Updating from 1.0.0 to 1.1.0<br/>
+> Ensure you update your /config volume to the new /data volume<br/>
 > Script will copy over existing data if it exists to the proper folders.
 
 ## Usage (Interactive Mode)
-
-Your initial start of the server you will have to create a world. Follow the prompts.
+With no WORLD environment variable set, interactive mode will be enabled.
+Follow the prompts to generate a world with your desired configuration. 
 ```
 docker run --rm -it \
     -p 7777:7777 \
@@ -37,11 +37,11 @@ docker run --rm -it \
     ghcr.io/taytom258/terraria-container
 ```
 
-After the initial world generation you can declare the world by specifying the path to the .wld file within an environment variable.
+After the initial world generation you can declare the world by specifying the path to the .wld file within the WORLD environment variable.
 Remember to set your settings in the serverconfig.txt located within the /config directory.
 
 > [!CAUTION]
-> Do not run your server in the interactive mode, only use the initial interactive mode to create the world.
+> Do not run your server in the interactive mode, only use the initial interactive mode to create the world.<br/>
 > Running your server interactively disables the autosave on exit functionality. You have been warned!
 
 ## Usage (Headless Autostart Mode)
