@@ -79,7 +79,7 @@ if [ "$(id -u)" = 0 ]; then
 		mkdir -p /tmp/tshock /opt/terraria /data/config/tshock /data/plugins
 		curl -sLo /tmp/tshock/tshock.zip $tshockURL
 		
-		if [[ ! -e /tmp/tshock/thock.zip ]]; then
+		if [[ ! -e /tmp/tshock/tshock.zip ]]; then
 			echo TShock download failed, check version numbers to ensure compatability
 			exit 4
 		fi
