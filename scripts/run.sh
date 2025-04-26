@@ -87,9 +87,9 @@ if [ "$(id -u)" = 0 ]; then
 	chmod -R g+w /data
 
 	if [ -z "$WORLD" ]; then
-		su -c "screen -mS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
+		su -c "screen -mUS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
 	else
-		su -c "screen -dmS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
+		su -c "screen -dmUS terra -L -Logfile /data/logs/server.'$date'.log ./TerrariaServer -x64 '$serverARGS'" ${runAsUser}
 
 		sleep 5
 		if ! screen -list | grep -q "terra"; then
@@ -103,7 +103,6 @@ if [ "$(id -u)" = 0 ]; then
 		fi
 		
 		trap "touch /root/sigterm" SIGTERM
-		tail -fs 1 /data/logs/server.$date.log
 		while [ ! -e /root/sigterm ]; do sleep 1; done
 		su -c 'screen -S terra -p 0 -X stuff 'exit^M'' terraria
 		echo -e 'SIGTERM Caught'
