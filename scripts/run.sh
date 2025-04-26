@@ -131,7 +131,7 @@ if [ "$(id -u)" = 0 ]; then
 	fi
 
 # Determining world file based on variable
-	if [ -n "$WORLD" ]; then
+	if [ -n "$WORLD" && -e $WORLD ]; then
 		serverARGS="$serverARGS -world $WORLD $@"
 	else
 		serverARGS="$serverARGS $@"
@@ -143,7 +143,7 @@ if [ "$(id -u)" = 0 ]; then
 
 # Starting the server
 	
-	if [ -z "$WORLD" ]; then
+	if [ -z "$WORLD" && -e $WORLD ]; then
 		if [ "$TYPE" == "tshock" ]; then
 			if [ -d /opt/terraria/server/dotnet ]; then
 				su -c "screen -mS terra -L -Logfile /data/logs/$date.sclog ./TShock.Server -x64 $serverARGS" ${runAsUser}
