@@ -79,7 +79,7 @@ if [ "$(id -u)" = 0 ]; then
 		mkdir -p /tmp/tshock /opt/terraria /data/config/tshock /data/plugins
 		curl -sLo /tmp/tshock/tshock.zip $tshockURL
 		
-		if [[ $? -ne 0 ]]; then
+		if [[ ! -e /tmp/tshock/thock.zip ]]; then
 			echo TShock download failed, check version numbers to ensure compatability
 			exit 4
 		fi
@@ -93,9 +93,10 @@ if [ "$(id -u)" = 0 ]; then
 		touch /opt/terraria/$TSVERSION.ver
 		
 		if [[ $TEST ]]; then
-		echo [Test] Downloading tshock...
-		echo Version [$TSVERSION] from
-		echo $tshockURL
+			echo [Test] Downloading tshock...
+			echo Version [$TSVERSION] from
+			echo $tshockURL
+		fi
 	fi
 
 # Checking exsistence of config and world files
