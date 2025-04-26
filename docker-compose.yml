@@ -9,7 +9,8 @@ services:
             - WORLD=/opt/terraria/test.wld
             - TZ=America/New_York
             - VERSION=latest
-            - TYPE=vanilla
+            - TSVERSION=latest
+            - TYPE=tshock
         network_mode: "host"
         tty: true
         stdin_open: true

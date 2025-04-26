@@ -146,24 +146,22 @@ if [ "$(id -u)" = 0 ]; then
 	if [ -z "$WORLD" ]; then
 		if [ "$TYPE" == "tshock" ]; then
 			if [ -d /opt/terraria/server/dotnet ]; then
-				su -c "screen -mS terra -L -Logfile /data/logs/server.$date.sclog ./TShock.Server -x64 $serverARGS" ${runAsUser}
+				su -c "screen -mS terra -L -Logfile /data/logs/$date.sclog ./TShock.Server -x64 $serverARGS" ${runAsUser}
 			else
-				su -c "screen -mS terra -L -Logfile /data/logs/server.$date.sclog ./TShock.Installer -x64 $serverARGS" ${runAsUser}
-				DOTNET_ROOT=/opt/terraria/server/dotnet
+				su -c "screen -mS terra -L -Logfile /data/logs/$date.sclog ./TShock.Installer -x64 $serverARGS" ${runAsUser}
 			fi
 		elif [ "$TYPE" == "vanilla" ]; then
-			su -c "screen -mS terra -L -Logfile /data/logs/server.$date.sclog ./TerrariaServer -x64 $serverARGS" ${runAsUser}
+			su -c "screen -mS terra -L -Logfile /data/logs/$date.sclog ./TerrariaServer -x64 $serverARGS" ${runAsUser}
 		fi
 	else
 		if [ "$TYPE" == "tshock" ]; then
 			if [ -d /opt/terraria/server/dotnet ]; then
-				su -c "screen -dmS terra -L -Logfile /data/logs/server.$date.sclog ./TShock.Server -x64 $serverARGS" ${runAsUser}
+				su -c "screen -dmS terra -L -Logfile /data/logs/$date.sclog ./TShock.Server -x64 $serverARGS" ${runAsUser}
 			else
-				su -c "screen -dmS terra -L -Logfile /data/logs/server.$date.sclog ./TShock.Installer -x64 $serverARGS" ${runAsUser}
-				DOTNET_ROOT=/opt/terraria/server/dotnet
+				su -c "screen -dmS terra -L -Logfile /data/logs/$date.sclog ./TShock.Installer -x64 $serverARGS" ${runAsUser}
 			fi
 		elif [ "$TYPE" == "vanilla" ]; then
-			su -c "screen -dmS terra -L -Logfile /data/logs/server.$date.sclog ./TerrariaServer -x64 $serverARGS" ${runAsUser}
+			su -c "screen -dmS terra -L -Logfile /data/logs/$date.sclog ./TerrariaServer -x64 $serverARGS" ${runAsUser}
 		fi
 		
 		if [[ $TEST ]]; then
