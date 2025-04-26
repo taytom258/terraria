@@ -3,8 +3,7 @@
 # Set Variables
 date=`date +"%Y-%m-%d-%H%M"`
 serverARGS="-config /data/config/serverconfig.txt -banlist /data/config/banlist.txt"
-TSserverARGS="-port $SERVER_PORT -players $MAXPLAYERS -worldselectpath /data/worlds -configpath /data/config/tshock \
--logpath /data/logs -additionalplugins /data/plugins -banlist /data/config/banlist.txt"
+TSserverARGS="-port $SERVER_PORT -players $MAXPLAYERS -worldselectpath /data/worlds -configpath /data/config/tshock -logpath /data/logs -additionalplugins /data/plugins -banlist /data/config/banlist.txt"
 updateURL=https://terraria.org/api/get/dedicated-servers-names
 serverURL=https://terraria.org/api/download/pc-dedicated-server
 tshockURL=https://github.com/Pryaxis/TShock/releases/download
@@ -71,9 +70,9 @@ if [ "$(id -u)" = 0 ]; then
 			$TSVERSION=$(curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | jq -r .tag_name)
 		fi
 		
-		VERSIONex=echo $VERSION | sed 's/./.&/2g'
-		TSVERSIONex=echo $TSVERSION | sed 's/./.&/2g'
-		TSVERSIONre=echo $TSVERSION | sed 's/v//' | sed 's/\.//g'
+		VERSIONex=$(echo $VERSION | sed 's/./.&/2g')
+		TSVERSIONex=$(echo $TSVERSION | sed 's/./.&/2g')
+		TSVERSIONre=$(echo $TSVERSION | sed 's/v//' | sed 's/\.//g')
 		
 		tshockURL=$tshockURL/v$TSVERSIONex/TShock-$TSVERSIONex-for-Terraria-$VERSIONex-linux-amd64-Release.zip
 		mkdir -p /tmp/tshock /opt/terraria /data/config/tshock /data/plugins
@@ -89,12 +88,12 @@ if [ "$(id -u)" = 0 ]; then
 		tar -xf /tmp/tshock/tshock.tar -C /opt/terraria/server
 		rm -rf /tmp/*
 		
-		$serverARGS=$TSserverARGS
+		$serverARGS="$TSserverARGS"
 		touch /opt/terraria/$TSVERSION.ver
 	fi
 
 # Checking exsistence of config and world files
-	if [ ! -f "/data/config/serverconfig.txt" && "$TYPE" == "vanilla" ]; then
+	if [[ ! -f "/data/config/serverconfig.txt" && "$TYPE" == "vanilla" ]]; then
 		if [ -f "/data/serverconfig.txt" ]; then
 			mv /data/serverconfig.txt /data/config/serverconfig.txt
 		else
@@ -166,7 +165,7 @@ if [ "$(id -u)" = 0 ]; then
 
 # Testing if server is 'running'
 		sleep $SCRDELAY
-		screenTest=$(su -c "screen -list" ${runAsUser} | grep -c "terra")
+		screenTest=$(su -c "screen -list" ${runAsUser} | grep -c "\.terra")
 		if [ $screenTest -gt 0 ]; then
 			echo -e "Server started with args [$serverARGS]"
 			if [[ $TEST ]]; then
