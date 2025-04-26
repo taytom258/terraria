@@ -3,8 +3,11 @@
 # Set Variables
 date=`date +"%Y-%m-%d-%H%M"`
 serverARGS="-config /data/config/serverconfig.txt -banlist /data/config/banlist.txt"
+TSserverARGS="-port $SERVER_PORT -players $MAXPLAYERS -worldselectpath /data/worlds -configpath /data/config/tshock \
+-logpath /data/logs -additionalplugins /data/plugins -banlist /data/config/banlist.txt"
 updateURL=https://terraria.org/api/get/dedicated-servers-names
 serverURL=https://terraria.org/api/download/pc-dedicated-server
+tshockURL=https://github.com/Pryaxis/TShock/releases/download
 
 # Check current user and adjust built-in user:group to match
 if [ "$(id -u)" = 0 ]; then
@@ -51,19 +54,47 @@ if [ "$(id -u)" = 0 ]; then
 # Download server and create default config file
 	if [[ ! -e /opt/terraria/$VERSION.ver ]]; then
 		rm -rf /opt/terraria/server/*
-		curl -so /tmp/terraria/server.zip $serverURL
-		unzip -q -d /tmp/terraria/ /tmp/terraria/server.zip && \
+		curl -sLo /tmp/terraria/server.zip $serverURL
+		unzip -qd /tmp/terraria/ /tmp/terraria/server.zip && \
 		cp -r /tmp/terraria/$VERSION/Linux/* /opt/terraria/server/ && \
 		cp /tmp/terraria/$VERSION/Windows/serverconfig.txt /opt/terraria/server/serverconfig.default && \
-		sed -in '/#maxplayers=.*/c\maxplayers=16' /opt/terraria/server/serverconfig.default && \
+		sed -in '/#maxplayers=.*/c\maxplayers=$MAXPLAYERS' /opt/terraria/server/serverconfig.default && \
 		sed -in '/#port=.*/c\port='$SERVER_PORT'' /opt/terraria/server/serverconfig.default && \
 		sed -in '/#worldpath=.*/c\worldpath=/data/worlds/' /opt/terraria/server/serverconfig.default && \
 		rm -rf /tmp/* /opt/terraria/server/*.defaultn
 		touch /opt/terraria/$VERSION.ver
 	fi
+	
+# Download and create TShock directories, if required
+	if [[ ! -e /opt/terraria/$TSVERSION.ver && "$TYPE" == "tshock" ]]; then
+		if [[ "$TSVERSION" == "latest" ]]; then
+			$TSVERSION=$(curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | jq -r .tag_name)
+		fi
+		
+		VERSIONex=echo $VERSION | sed 's/./.&/2g'
+		TSVERSIONex=echo $TSVERSION | sed 's/./.&/2g'
+		TSVERSIONre=echo $TSVERSION | sed 's/v//' | sed 's/\.//g'
+		
+		tshockURL=$tshockURL/v$TSVERSIONex/TShock-$TSVERSIONex-for-Terraria-$VERSIONex-linux-amd64-Release.zip
+		mkdir -p /tmp/tshock /opt/terraria /data/config/tshock /data/plugins
+		curl -sLo /tmp/tshock/tshock.zip $tshockURL
+		
+		if [[ $? -ne 0 ]]; then
+			echo TShock download failed, check version numbers to ensure compatability
+			exit 4
+		fi
+		
+		unzip -qd /tmp/tshock/ /tmp/tshock/tshock.zip
+		mv /tmp/tshock/*.tar /tmp/tshock/tshock.tar
+		tar -xf /tmp/tshock/tshock.tar -C /opt/terraria/server
+		rm -rf /tmp/*
+		
+		$serverARGS=$TSserverARGS
+		touch /opt/terraria/$TSVERSION.ver
+	fi
 
-# Checking existance of config and world files
-	if [ ! -f "/data/config/serverconfig.txt" ]; then
+# Checking exsistence of config and world files
+	if [ ! -f "/data/config/serverconfig.txt" && "$TYPE" == "vanilla" ]; then
 		if [ -f "/data/serverconfig.txt" ]; then
 			mv /data/serverconfig.txt /data/config/serverconfig.txt
 		else
@@ -78,7 +109,12 @@ if [ "$(id -u)" = 0 ]; then
 			touch /data/config/banlist.txt
 		fi
 	fi
-	
+
+# v1.0.0 to v1.1.0 file movements
+	if [ -f "/data/*.txt" ]; then
+		mv /data/*.txt /data/config/
+	fi
+
 	if [ -f "/data/*.log" ]; then
 		mv /data/*.log /data/logs/
 	fi
@@ -100,20 +136,31 @@ if [ "$(id -u)" = 0 ]; then
 	chmod -R g+w /data
 
 # Starting the server
+	
 	if [ -z "$WORLD" ]; then
-		su -c "screen -mS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS" ${runAsUser}
-		if [[ $TEST ]]; then
-			CMD="screen -mS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS"
-			echo [Test] Starting...
-			echo $CMD
-			su -c "screen -list" ${runAsUser}
+		if [ "$TYPE" == "tshock" ]; then
+			if [ -d /opt/terraria/dotnet ]; then
+				su -c "screen -mS terra ./TShock.Server -x64 $serverARGS" ${runAsUser}
+			else
+				su -c "screen -mS terra ./TShock.Installer -x64 $serverARGS" ${runAsUser}
+				DOTNET_ROOT=/opt/terraria/server/dotnet
+			fi
+		elif [ "$TYPE" == "vanilla" ]; then
+			su -c "screen -mS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS" ${runAsUser}
 		fi
 	else
-		su -c "screen -dmS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS" ${runAsUser}
+		if [ "$TYPE" == "tshock" ]; then
+			if [ -d /opt/terraria/dotnet ]; then
+				su -c "screen -dmS terra ./TShock.Server -x64 $serverARGS" ${runAsUser}
+			else
+				su -c "screen -dmS terra ./TShock.Installer -x64 $serverARGS" ${runAsUser}
+			fi
+		elif [ "$TYPE" == "vanilla" ]; then
+			su -c "screen -dmS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS" ${runAsUser}
+		fi
+		
 		if [[ $TEST ]]; then
-			CMD="screen -dmS terra -L -Logfile /data/logs/server.$date.log ./TerrariaServer -x64 $serverARGS"
 			echo [Test] Starting...
-			echo $CMD
 			su -c "screen -list" ${runAsUser}
 		fi
 
@@ -121,14 +168,13 @@ if [ "$(id -u)" = 0 ]; then
 		sleep $SCRDELAY
 		screenTest=$(su -c "screen -list" ${runAsUser} | grep -c "terra")
 		if [ $screenTest -gt 0 ]; then
-			echo -e 'Server started [TerrariaServer -x64 '$serverARGS']'
+			echo -e "Server started with args [$serverARGS]"
 			if [[ $TEST ]]; then
 				exit 0
 			fi
 		else
 			echo -e 'Server failed to start'
 			if [[ $TEST ]]; then
-				echo $screenTest
 				ls -al /opt/terraria/
 				ls -al /opt/terraria/server/
 				ls -al /data/

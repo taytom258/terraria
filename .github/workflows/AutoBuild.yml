@@ -56,6 +56,10 @@ jobs:
       - name: Test vanilla server
         run: |
           docker run -e WORLD=/opt/terraria/test.wld -e TEST=true --rm ${{ env.TEST_TAG }}
+      
+      - name: Test tshock server
+        run: |
+          docker run -e TYPE=tshock -e WORLD=/opt/terraria/test.wld -e TEST=true --rm ${{ env.TEST_TAG }}
           
       - name: Docker Meta - main
         if: github.ref_name == 'main' || github.ref_type == 'tag'
