@@ -168,13 +168,13 @@ if [ "$(id -u)" = 0 ]; then
 		if [[ $TEST ]]; then
 			echo [Test] Starting...
 			echo Args [$serverARGS]
+			su -c "screen -S terra -p 0 -X hardcopy" ${runAsUser}
 			su -c "screen -list" ${runAsUser}
 		fi
 
 # Testing if server is 'running'
 		sleep $SCRDELAY
 		screenTest=$(su -c "screen -list" ${runAsUser} | grep -c "\.terra")
-		su -c "screen -S terra -p 0 -X hardcopy" ${runAsUser}
 		if [ $screenTest -gt 0 ]; then
 			echo -e "Server started with args [$serverARGS]"
 			if [[ $TEST ]]; then
