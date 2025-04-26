@@ -17,8 +17,9 @@ Github Repository<br/>
 [Github](https://github.com/taytom258/terraria-container)
 
 > [!NOTE]
-> Try not to run your server in the interactive mode, only use the initial interactive mode to create the world.
-> Running your server interactively disables the autosave on exit functionality. You have been warned!
+> Updating from 1.0.0 to 1.1.0
+> Ensure you update your /config volume to the new /data volume
+> Script will copy over existing data if it exists to the proper folders.
 
 ## Usage (Initial Interactive Mode)
 
@@ -31,7 +32,7 @@ docker run --rm -it \
     -e TZ=America/New_York \
     -e VERSION=1449 \
     -e TYPE=vanilla \
-    -v $HOME/terraria/config:/config \
+    -v $HOME/terraria:/data \
     --name=terraria \
     ghcr.io/taytom258/terraria-container
 ```
@@ -54,7 +55,7 @@ docker run --rm \
     -e TZ=America/New_York \
     -e VERSION=1449 \
     -e TYPE=vanilla \
-    -v $HOME/terraria/config:/config \
+    -v $HOME/terraria:/data \
     --name=terraria \
     ghcr.io/taytom258/terraria-container
 ```
@@ -76,12 +77,12 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - WORLD=/config/world.wld
+      - WORLD=/data/worlds/world.wld
       - TZ=America/New_York
       - VERSION=1449
       - TYPE=vanilla
     volumes:
-      - $HOME/terraria/config:/config
+      - $HOME/terraria:/data
     restart: unless-stopped
 ```
 
@@ -95,7 +96,7 @@ services:
 * `PGID` - Group ID of account running server within the container
 * `WORLD` - World file name as located within /config
 * `TZ` - Timezone to set for proper log times - [TZ Table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
-* `VERSION` - Server version to run
+* `VERSION` - Server version to run - [Version](https://terraria.wiki.gg/wiki/Server#Downloads) or latest
 * `TYPE` - Server type to run, currently only vanilla
 
 ## Additional Features

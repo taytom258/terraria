@@ -3,6 +3,7 @@
 date=`date +"%Y-%m-%d-%H%M"`
 serverARGS="-config /data/config/serverconfig.txt -banlist /data/config/banlist.txt"
 serverURL=https://terraria.org/api/download/pc-dedicated-server/terraria-server-$VERSION.zip
+updateURL=https://terraria.org/api/get/dedicated-servers-names
 
 if [ "$(id -u)" = 0 ]; then
 	runAsUser=terraria
@@ -28,9 +29,17 @@ if [ "$(id -u)" = 0 ]; then
 		fi
 	fi
 	
+	HTTPCODE=$(curl -sI https://terraria.org | awk '/HTTP\/[0-9.]+/{print $2}')
+	if [[ $VERSION == "latest" && $HTTPCODE -eq 200 ]]; then
+		VERSION=$(curl -s $updateURL | grep -Po -e '\d+' | head -1)
+	elif [[ $HTTPCODE -ne 200 ]]; then
+		echo Terraria.org is unreachable, is it down?
+		exit 2
+	fi
+	
 	if [[ ! -e /opt/terraria/$VERSION.ver ]]; then
 		rm -rf /opt/terraria/server/*
-		wget -q -O /tmp/terraria/server.zip $serverURL
+		curl -so /tmp/terraria/server.zip $serverURL
 		unzip -q -d /tmp/terraria/ /tmp/terraria/server.zip && \
 		cp -r /tmp/terraria/$VERSION/Linux/* /opt/terraria/server/ && \
 		cp /tmp/terraria/$VERSION/Windows/serverconfig.txt /opt/terraria/server/serverconfig.default && \
@@ -88,7 +97,7 @@ if [ "$(id -u)" = 0 ]; then
 			fi
 		else
 			echo -e 'Server failed to start'
-			exit 2
+			exit 3
 		fi
 		
 		trap "touch /root/sigterm" SIGTERM
