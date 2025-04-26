@@ -30,7 +30,7 @@ if [ "$(id -u)" = 0 ]; then
 	fi
 	
 	HTTPCODE=$(curl -sI https://terraria.org | awk '/HTTP\/[0-9.]+/{print $2}')
-	if [[ $VERSION == "latest" && $HTTPCODE -eq 200 ]]; then
+	if [[ "$VERSION" == "latest" && $HTTPCODE -eq 200 ]]; then
 		VERSION=$(curl -s $updateURL | grep -Po -e '\d+' | head -1)
 	elif [[ $HTTPCODE -ne 200 ]]; then
 		echo Terraria.org is unreachable, is it down?
