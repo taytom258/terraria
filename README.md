@@ -96,7 +96,7 @@ services:
 * `PGID` - Group ID of account running server within the container
 * `WORLD` - World file name as located within /config
 * `TZ` - Timezone to set for proper log times - [TZ Table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
-* `VERSION` - Server version to run - [Version](https://terraria.wiki.gg/wiki/Server#Downloads) or latest
+* `VERSION` - Vanilla server version to run - [Version](https://terraria.wiki.gg/wiki/Server#Downloads) or latest
 * `TYPE` - Server type to run, currently only vanilla
 
 ## Additional Features
