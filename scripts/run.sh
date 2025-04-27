@@ -4,8 +4,8 @@
 date=`date +"%Y-%m-%d-%H%M"`
 serverARGS="-config /data/config/serverconfig.txt -port $SERVER_PORT -players $MAXPLAYERS -autocreate $AUTOCREATE \
 -banlist /data/config/banlist.txt"
-TSserverARGS="-port $SERVER_PORT -players $MAXPLAYERS -worldselectpath /data/worlds -configpath /data/config/tshock \
--logpath /data/logs -additionalplugins /data/plugins -banlist /data/config/banlist.txt"
+TSserverARGS="-worldselectpath /data/worlds -configpath /data/config/tshock \
+-logpath /data/logs -additionalplugins /data/plugins"
 updateURL=https://terraria.org/api/get/dedicated-servers-names
 serverURL=https://terraria.org/api/download/pc-dedicated-server
 tshockURL=https://github.com/Pryaxis/TShock/releases/download
@@ -99,7 +99,7 @@ if [[ "$(id -u)" = 0 ]]; then
 		tar -xf /tmp/tshock/tshock.tar -C /opt/terraria/server
 		rm -rf /tmp/*
 		
-		serverARGS=$TSserverARGS
+		serverARGS="$serverARGS $TSserverARGS $@"
 		touch /opt/terraria/$TSVERSION.ver
 		
 		if [[ $TEST ]]; then
