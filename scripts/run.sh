@@ -72,10 +72,14 @@ if [[ "$(id -u)" = 0 ]]; then
 	if [[ ! -e /opt/terraria/$TSVERSION.ver && "$TYPE" == "tshock" ]]; then
 		if [[ "$TSVERSION" == "latest" ]]; then
 			TSVERSIONexv=$(curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | jq -r .tag_name)
+			TSVERSIONex=$(echo $TSVERSIONexv | sed 's/v//')
+			TSVERSION=$(echo $TSVERSIONex | sed 's/v//' | sed 's/\.//g')
+		else
+			TSVERSION=$(echo $TSVERSION | sed 's/v//' | sed 's/\.//g')
+			TSVERSIONex=$(echo $TSVERSION | sed 's/./.&/2g')
+			TSVERSIONexv="v$TSVERSIONex"
 		fi
 		
-		TSVERSIONex=$(echo $TSVERSIONexv | sed 's/v//')
-		TSVERSION=$(echo $TSVERSIONex | sed 's/v//' | sed 's/\.//g')
 		VERSIONex=$(echo $VERSION | sed 's/./.&/2g')
 		
 		tshockURL=$tshockURL/$TSVERSIONexv/TShock-$TSVERSIONex-for-Terraria-$VERSIONex-linux-amd64-Release.zip		
