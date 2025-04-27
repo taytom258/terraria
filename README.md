@@ -53,7 +53,7 @@ docker run --rm \
     -p 7777:7777 \
     -e PUID=1000 \
     -e PGID=1000 \
-    -e WORLD=/config/world.wld \
+    -e WORLD=/data/world.wld \
     -e TZ=America/New_York \
     -e VERSION=latest \
     -e TYPE=vanilla \
@@ -95,15 +95,18 @@ services:
 > The first non-root user within most linux distros is set to 1000 as the UID. This will typically allow you to edit the files produced by this container without issue.
 > If you however change the default UID or GID using these environment variables, make sure your user, and also the owner of the bind mount files, are able to access the files.
 
-* `TYPE` - Server type to run [vanilla or tshock]
-* `VERSION` - Vanilla server version to run - latest or [Version](https://terraria.wiki.gg/wiki/Server#Downloads)
-* `TSVERSION` - TShock server version to run - Only active with TYPE=tshock - latest or [Version](https://github.com/Pryaxis/TShock/releases)
-* `WORLD` - World file name as located within /config
-* `MAXPLAYERS` - Maximum amount of players allowed on the server
-* `AUTOCREATE` - Size of world to autocreate if does not exist, 1-Small 2-Medium 3-Large
-* `PUID` - User ID of account running server within the container
-* `PGID` - Group ID of account running server within the container
-* `TZ` - Timezone to set for proper log times - [TZ Table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+* `TYPE` - Server type to run, vanilla or tshock - [Default vanilla]
+* `VERSION` - Vanilla server version to run - latest or [Version](https://terraria.wiki.gg/wiki/Server#Downloads) - [Default latest]
+* `TSVERSION` - TShock server version to run - Only active with TYPE=tshock - latest or [Version](https://github.com/Pryaxis/TShock/releases) - [Default latest]
+* `WORLD` - World file name as located within /config - [Default none]
+* `MAXPLAYERS` - Maximum amount of players allowed on the server - [Default 8]
+* `AUTOCREATE` - Size of world to autocreate if world as specified through WORLD does not exist, 1-Small 2-Medium 3-Large - [Default 2]
+* `SERVER_PORT` - Port to run the server on - [Default 7777]
+* `PUID` - User ID of account running server within the container - [Default 1000]
+* `PGID` - Group ID of account running server within the container - [Default 1000]
+* `TZ` - Timezone to set for proper log times - [TZ Table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) - [Default UTC]
+* `SCRDELAY` - Delay in seconds between start command and screen check to ensure server is running - [Default 5]
+* `SIGDELAY` - Delay in seconds between container receiving shutdown command and script exiting, giving server time to save the world - [Default 2]
 
 ## Additional Features
 
