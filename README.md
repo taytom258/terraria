@@ -97,10 +97,10 @@ services:
 
 * `TYPE` - Server type to run [vanilla or tshock]
 * `VERSION` - Vanilla server version to run - latest or [Version](https://terraria.wiki.gg/wiki/Server#Downloads)
-* 'TSVERSION' - TShock server version to run - Only active with TYPE=tshock - latest or [Version](https://github.com/Pryaxis/TShock/releases)
+* `TSVERSION` - TShock server version to run - Only active with TYPE=tshock - latest or [Version](https://github.com/Pryaxis/TShock/releases)
 * `WORLD` - World file name as located within /config
-* 'MAXPLAYERS' - Maximum amount of players allowed on the server
-* 'AUTOCREATE' - Size of world to autocreate if does not exist, 1-Small 2-Medium 3-Large
+* `MAXPLAYERS` - Maximum amount of players allowed on the server
+* `AUTOCREATE` - Size of world to autocreate if does not exist, 1-Small 2-Medium 3-Large
 * `PUID` - User ID of account running server within the container
 * `PGID` - Group ID of account running server within the container
 * `TZ` - Timezone to set for proper log times - [TZ Table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
