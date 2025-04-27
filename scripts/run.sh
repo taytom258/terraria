@@ -9,7 +9,7 @@ serverURL=https://terraria.org/api/download/pc-dedicated-server
 tshockURL=https://github.com/Pryaxis/TShock/releases/download
 
 # Check current user and adjust built-in user:group to match
-if [ "$(id -u)" = 0 ]; then
+if [[ "$(id -u)" = 0 ]]; then
 	runAsUser=terraria
 	runAsGroup=terraria
 
@@ -102,15 +102,15 @@ if [ "$(id -u)" = 0 ]; then
 
 # Checking exsistence of config and world files
 	if [[ ! -f "/data/config/serverconfig.txt" && "$TYPE" == "vanilla" ]]; then
-		if [ -f "/data/serverconfig.txt" ]; then
+		if [[ -f "/data/serverconfig.txt" ]]; then
 			mv /data/serverconfig.txt /data/config/serverconfig.txt
 		else
 			cp ./serverconfig.default /data/config/serverconfig.txt
 		fi
 	fi
 
-	if [ ! -f "/data/config/banlist.txt" ]; then
-		if [ -f "/data/banlist.txt" ]; then
+	if [[ ! -f "/data/config/banlist.txt" ]]; then
+		if [[ -f "/data/banlist.txt" ]]; then
 			mv /data/banlist.txt /data/config/banlist.txt
 		else
 			touch /data/config/banlist.txt
@@ -118,15 +118,15 @@ if [ "$(id -u)" = 0 ]; then
 	fi
 
 # v1.0.0 to v1.1.0 file movements
-	if [[ ls /data/*.txt ]]; then
+	if ls /data/*.txt 1> /dev/null 2>&1; then
 		mv /data/*.txt /data/config/
 	fi
 
-	if [[ ls /data/*.log ]]; then
+	if ls /data/*.log 1> /dev/null 2>&1; then
 		mv /data/*.log /data/logs/
 	fi
 	
-	if [[ ls /data/*.wld ]]; then
+	if ls /data/*.wld 1> /dev/null 2>&1; then
 		mv /data/*wld* /data/worlds/
 	fi
 
@@ -144,23 +144,23 @@ if [ "$(id -u)" = 0 ]; then
 # Starting the server
 	
 	if [[-z "$WORLD" && -e $WORLD ]]; then
-		if [ "$TYPE" == "tshock" ]; then
-			if [ -d /opt/terraria/server/dotnet ]; then
+		if [[ "$TYPE" == "tshock" ]]; then
+			if [[ -d /opt/terraria/server/dotnet ]]; then
 				su -c "screen -mS terra -L -Logfile /data/logs/$date.sclog ./TShock.Server -x64 $serverARGS" ${runAsUser}
 			else
 				su -c "screen -mS terra -L -Logfile /data/logs/$date.sclog ./TShock.Installer -x64 $serverARGS" ${runAsUser}
 			fi
-		elif [ "$TYPE" == "vanilla" ]; then
+		elif [[ "$TYPE" == "vanilla" ]]; then
 			su -c "screen -mS terra -L -Logfile /data/logs/$date.sclog ./TerrariaServer -x64 $serverARGS" ${runAsUser}
 		fi
 	else
-		if [ "$TYPE" == "tshock" ]; then
-			if [ -d /opt/terraria/server/dotnet ]; then
+		if [[ "$TYPE" == "tshock" ]]; then
+			if [[ -d /opt/terraria/server/dotnet ]]; then
 				su -c "screen -dmS terra -L -Logfile /data/logs/$date.sclog ./TShock.Server -x64 $serverARGS" ${runAsUser}
 			else
 				su -c "screen -dmS terra -L -Logfile /data/logs/$date.sclog ./TShock.Installer -x64 $serverARGS" ${runAsUser}
 			fi
-		elif [ "$TYPE" == "vanilla" ]; then
+		elif [[ "$TYPE" == "vanilla" ]]; then
 			su -c "screen -dmS terra -L -Logfile /data/logs/$date.sclog ./TerrariaServer -x64 $serverARGS" ${runAsUser}
 		fi
 		
@@ -173,7 +173,7 @@ if [ "$(id -u)" = 0 ]; then
 # Testing if server is 'running'
 		sleep $SCRDELAY
 		screenTest=$(su -c "screen -list" ${runAsUser} | grep -c "\.terra")
-		if [ $screenTest -gt 0 ]; then
+		if [[ $screenTest -gt 0 ]]; then
 			echo -e "Server started with args [$serverARGS]"
 			if [[ $TEST ]]; then
 				exit 0
@@ -198,7 +198,7 @@ if [ "$(id -u)" = 0 ]; then
 		
 # Setup save on quit functionality
 		trap "touch /root/sigterm" SIGTERM
-		while [ ! -e /root/sigterm ]; do sleep 1; done
+		while [[ ! -e /root/sigterm ]]; do sleep 1; done
 		su -c 'screen -S terra -p 0 -X stuff 'exit^M'' terraria
 		echo -e 'SIGTERM Caught'
 		rm -f /root/sigterm
