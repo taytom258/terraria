@@ -107,6 +107,10 @@ services:
 
 ## Additional Features
 
+### Autosave on exit functionality
+When container detects shutdown it will send an `exit` command to the server.<br/>
+This will save the world before shutting down the container.
+
 ### Addtional command-line arguments
 Command-line arguments can be passed through to the server by specifying after the run command.<br/>
 Docker compose would utilize the command: instruction<br/>
