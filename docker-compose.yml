@@ -3,18 +3,20 @@ name: terraria-container
 services:
     terraria:
         image: ghcr.io/taytom258/terraria-container:dev
+        command: -noupnp
         environment:
             - PUID=1012
             - PGID=1012
-            - WORLD=test.wld
+            - WORLD=/opt/terraria/test.wld
             - TZ=America/New_York
-            - VERSION=1446
-            - TYPE=vanilla
+            - VERSION=latest
+            - TSVERSION=latest
+            - TYPE=tshock
         network_mode: "host"
         tty: true
         stdin_open: true
         volumes:
-            - terraria:/config:z
+            - terraria:/data:z
         pull_policy: always
 
 volumes:
