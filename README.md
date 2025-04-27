@@ -24,7 +24,7 @@ Github Repository<br/>
 > Script will copy over existing data if it exists to the proper folders.
 
 ## Usage (Interactive Mode)
-With no WORLD environment variable set, interactive mode will be enabled.
+With no WORLD environment variable set, interactive mode will be enabled.<br/>
 Follow the prompts to generate a world with your desired configuration. 
 ```
 docker run --rm -it \
@@ -39,7 +39,7 @@ docker run --rm -it \
     ghcr.io/taytom258/terraria-container
 ```
 
-After the initial world generation you can declare the world by specifying the path to the .wld file within the WORLD environment variable.
+After the initial world generation you can declare the world by specifying the path to the .wld file within the WORLD environment variable.<br/>
 Remember to set your settings in the serverconfig.txt located within the /config directory.
 
 > [!CAUTION]
