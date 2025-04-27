@@ -17,7 +17,7 @@ RUN apt-get update && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /data/config /data/worlds /data/logs /opt/terraria/server /tmp/terraria && \
+RUN mkdir -p /data /opt/terraria/server /tmp/terraria && \
 	userdel -f ubuntu && \
 	useradd -m -s /bin/bash -k /etc/ske1/ -u $PUID terraria
 

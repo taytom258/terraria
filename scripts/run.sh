@@ -120,14 +120,17 @@ if [[ "$(id -u)" = 0 ]]; then
 
 # v1.0.0 to v1.1.0 file movements
 	if ls /data/*.txt 1> /dev/null 2>&1; then
+		mkdir -p /data/config
 		mv /data/*.txt /data/config/
 	fi
 
 	if ls /data/*.log 1> /dev/null 2>&1; then
+		mkdir -p /data/logs
 		mv /data/*.log /data/logs/
 	fi
 	
 	if ls /data/*.wld 1> /dev/null 2>&1; then
+		mkdir -p /data/worlds
 		mv /data/*wld* /data/worlds/
 	fi
 
