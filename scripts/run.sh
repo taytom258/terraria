@@ -4,18 +4,12 @@
 date=`date +"%Y-%m-%d-%H%M"`
 serverARGS="-config /data/config/serverconfig.txt -port $SERVER_PORT -players $MAXPLAYERS -autocreate $AUTOCREATE \
 -banlist /data/config/banlist.txt"
-TSserverARGS="-worldselectpath /data/worlds -configpath /data/config/tshock \
--logpath /data/logs -additionalplugins /data/plugins"
+TSserverARGS="-port $SERVER_PORT -players $MAXPLAYERS -autocreate $AUTOCREATE \
+-banlist /data/config/banlist.txt -worldselectpath /data/worlds -configpath /data/config/tshock \
+-logpath /data/logs -additionalplugins /data/plugins -crashdir /data/logs"
 updateURL=https://terraria.org/api/get/dedicated-servers-names
 serverURL=https://terraria.org/api/download/pc-dedicated-server
 tshockURL=https://github.com/Pryaxis/TShock/releases/download
-
-# Determining world file based on variable
-	if [[ -n "$WORLD" && -e $WORLD ]]; then
-		serverARGS="$serverARGS -world $WORLD $@"
-	else
-		serverARGS="$serverARGS -worldname world.wld $@"
-	fi
 
 # Check current user and adjust built-in user:group to match
 if [[ "$(id -u)" = 0 ]]; then
@@ -61,8 +55,6 @@ if [[ "$(id -u)" = 0 ]]; then
 		unzip -qd /tmp/terraria/ /tmp/terraria/server.zip && \
 		cp -r /tmp/terraria/$VERSION/Linux/* /opt/terraria/server/ && \
 		cp /tmp/terraria/$VERSION/Windows/serverconfig.txt /opt/terraria/server/serverconfig.default && \
-		sed -in '/#maxplayers=.*/c\maxplayers='$MAXPLAYERS'' /opt/terraria/server/serverconfig.default && \
-		sed -in '/#port=.*/c\port='$SERVER_PORT'' /opt/terraria/server/serverconfig.default && \
 		sed -in '/#worldpath=.*/c\worldpath=/data/worlds/' /opt/terraria/server/serverconfig.default && \
 		rm -rf /tmp/* /opt/terraria/server/*.defaultn
 		touch /opt/terraria/$VERSION.ver
@@ -99,7 +91,7 @@ if [[ "$(id -u)" = 0 ]]; then
 		tar -xf /tmp/tshock/tshock.tar -C /opt/terraria/server
 		rm -rf /tmp/*
 		
-		serverARGS="$serverARGS $TSserverARGS $@"
+		serverARGS=$TSserverARGS
 		touch /opt/terraria/$TSVERSION.ver
 		
 		if [[ $TEST ]]; then
@@ -145,7 +137,8 @@ if [[ "$(id -u)" = 0 ]]; then
 
 # Starting the server
 	
-	if [[ -z "$WORLD" && -e $WORLD ]]; then
+	if [[ -z "$WORLD" ]]; then
+			serverARGS="$serverARGS $@"
 		if [[ "$TYPE" == "tshock" ]]; then
 			if [[ -d /opt/terraria/server/dotnet ]]; then
 				su -c "screen -mS terra -L -Logfile /data/logs/$date.sclog ./TShock.Server -x64 $serverARGS" ${runAsUser}
@@ -156,6 +149,12 @@ if [[ "$(id -u)" = 0 ]]; then
 			su -c "screen -mS terra -L -Logfile /data/logs/$date.sclog ./TerrariaServer -x64 $serverARGS" ${runAsUser}
 		fi
 	else
+		if [[ -n "$WORLD" && ! -e $WORLD ]]; then
+			serverARGS="$serverARGS -worldname $WORLD $@"
+		else
+			serverARGS="$serverARGS -world $WORLD $@"
+		fi
+		
 		if [[ "$TYPE" == "tshock" ]]; then
 			if [[ -d /opt/terraria/server/dotnet ]]; then
 				su -c "screen -dmS terra -L -Logfile /data/logs/$date.sclog ./TShock.Server -x64 $serverARGS" ${runAsUser}
