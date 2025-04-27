@@ -46,7 +46,7 @@ Remember to set your settings in the serverconfig.txt located within the /config
 > Do not run your server in interactive mode, only use the interactive mode to create your world.<br/>
 > Running your server interactively disables the autosave on shutdown functionality. You have been warned!
 
-## Usage (Headless Autostart Mode)
+## Usage (Non-Interactive Mode/Daemon Mode)
 Logs & worlds are stored within the /config directory
 ```
 docker run --rm \
@@ -100,6 +100,7 @@ services:
 * 'TSVERSION' - TShock server version to run - Only active with TYPE=tshock - latest or [Version](https://github.com/Pryaxis/TShock/releases)
 * `WORLD` - World file name as located within /config
 * 'MAXPLAYERS' - Maximum amount of players allowed on the server
+* 'AUTOCREATE' - Size of world to autocreate if does not exist, 1-Small 2-Medium 3-Large
 * `PUID` - User ID of account running server within the container
 * `PGID` - Group ID of account running server within the container
 * `TZ` - Timezone to set for proper log times - [TZ Table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
@@ -127,7 +128,7 @@ docker attach terraria
 > [!TIP]
 > To detach press `CTRL-p` then `CTRL-q`
 
-### Send commands externally to server
+### Send commands externally to server (Only available in non-interactive mode)
 ```
 docker exec -u terraria terraria screen -S terra -p 0 -X stuff "<command here>^M"
 ```
