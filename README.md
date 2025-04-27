@@ -64,8 +64,7 @@ docker run --rm \
 
 ## Supported tags
 [latest] - Latest Server Build<br/>
-[1.0.0] - Server Release 1.0.0<br/>
-[1.1.0] - Server Release 1.1.0<br/>
+[x.x.x] - Server Release Version x.x.x<br/>
 [dev] - Server Development Build - More than likely broken!
 
 ## Docker Compose Example
