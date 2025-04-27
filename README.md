@@ -1,5 +1,5 @@
-# Terraria Containerized
-[Vanilla] & [TShock]
+# Terraria Containerized - Vanilla & TShock
+
 
 [![AutoBuild](https://github.com/taytom258/terraria-container/actions/workflows/AutoBuild.yml/badge.svg?branch=main)](https://github.com/taytom258/terraria-container/actions/workflows/AutoBuild.yml)
 ![GitHub commits since tagged version](https://img.shields.io/github/commits-since/taytom258/terraria-container/v1.1.0)
