@@ -107,7 +107,7 @@ services:
 
 ## Additional Features
 
-### Autosave on exit funtionality
+### Autosave on exit functionality
 When container detects shutdown it will send an `exit` command to the server.<br/>
 This will save the world before shutting down the container.
 
