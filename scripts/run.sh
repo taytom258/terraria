@@ -2,11 +2,20 @@
 
 # Set Variables
 date=`date +"%Y-%m-%d-%H%M"`
-serverARGS="-config /data/config/serverconfig.txt -banlist /data/config/banlist.txt"
-TSserverARGS="-port $SERVER_PORT -players $MAXPLAYERS -worldselectpath /data/worlds -configpath /data/config/tshock -logpath /data/logs -additionalplugins /data/plugins -banlist /data/config/banlist.txt"
+serverARGS="-config /data/config/serverconfig.txt -port $SERVER_PORT -players $MAXPLAYERS -autocreate $AUTOCREATE \
+-banlist /data/config/banlist.txt"
+TSserverARGS="-port $SERVER_PORT -players $MAXPLAYERS -worldselectpath /data/worlds -configpath /data/config/tshock \
+-logpath /data/logs -additionalplugins /data/plugins -banlist /data/config/banlist.txt"
 updateURL=https://terraria.org/api/get/dedicated-servers-names
 serverURL=https://terraria.org/api/download/pc-dedicated-server
 tshockURL=https://github.com/Pryaxis/TShock/releases/download
+
+# Determining world file based on variable
+	if [[ -n "$WORLD" && -e $WORLD ]]; then
+		serverARGS="$serverARGS -world $WORLD $@"
+	else
+		serverARGS="$serverARGS -worldname world.wld $@"
+	fi
 
 # Check current user and adjust built-in user:group to match
 if [[ "$(id -u)" = 0 ]]; then
@@ -130,20 +139,13 @@ if [[ "$(id -u)" = 0 ]]; then
 		mv /data/*wld* /data/worlds/
 	fi
 
-# Determining world file based on variable
-	if [[ -n "$WORLD" && -e $WORLD ]]; then
-		serverARGS="$serverARGS -world $WORLD $@"
-	else
-		serverARGS="$serverARGS $@"
-	fi
-
 # Giving ownership to built-in user
 	chown -R ${runAsUser}:${runAsGroup} /data /opt/terraria
 	chmod -R g+w /data
 
 # Starting the server
 	
-	if [[-z "$WORLD" && -e $WORLD ]]; then
+	if [[ -z "$WORLD" && -e $WORLD ]]; then
 		if [[ "$TYPE" == "tshock" ]]; then
 			if [[ -d /opt/terraria/server/dotnet ]]; then
 				su -c "screen -mS terra -L -Logfile /data/logs/$date.sclog ./TShock.Server -x64 $serverARGS" ${runAsUser}

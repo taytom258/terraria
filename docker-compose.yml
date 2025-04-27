@@ -3,6 +3,7 @@ name: terraria-container
 services:
     terraria:
         image: ghcr.io/taytom258/terraria-container:dev
+        command: -noupnp
         environment:
             - PUID=1012
             - PGID=1012
