@@ -104,6 +104,20 @@ services:
 
 ## Additional Features
 
+### Addtional command-line arguments
+Command-line arguments can be passed through to the server by specifying after the run command.<br/>
+Docker compose would utilize the command: instruction<br/>
+```
+docker run --rm ... ghcr.io/taytom258/terraria-container -noupnp
+```
+```
+...
+image: ghcr.io/taytom258/terraria-container
+command: -noupnp
+ports:
+...
+```
+
 ### Attaching to server to run commands (Only available in interactive mode)
 ```
 docker attach terraria
