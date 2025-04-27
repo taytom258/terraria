@@ -16,6 +16,8 @@ Docker Images<br/>
 Github Repository<br/>
 [Github](https://github.com/taytom258/terraria-container)
 
+
+
 > [!NOTE]
 > Updating from 1.0.0 to 1.1.0<br/>
 > Ensure you update your /config volume to the new /data volume<br/>
