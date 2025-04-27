@@ -1,4 +1,5 @@
 # Terraria Containerized
+[Vanilla] & [TShock]
 
 [![AutoBuild](https://github.com/taytom258/terraria-container/actions/workflows/AutoBuild.yml/badge.svg?branch=main)](https://github.com/taytom258/terraria-container/actions/workflows/AutoBuild.yml)
 ![GitHub commits since tagged version](https://img.shields.io/github/commits-since/taytom258/terraria-container/v1.1.0)
@@ -16,8 +17,7 @@ Docker Images<br/>
 Github Repository<br/>
 [Github](https://github.com/taytom258/terraria-container)
 
-
-
+## FAQ
 > [!NOTE]
 > Updating from 1.0.0 to 1.1.0<br/>
 > Ensure you update your /config volume to the new /data volume<br/>
