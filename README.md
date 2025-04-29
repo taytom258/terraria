@@ -105,7 +105,7 @@ services:
 * `PGID` - Group ID of account running server within the container - [Default 1000]
 * `TZ` - Timezone to set for proper log times - [TZ Table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) - [Default UTC]
 * `SCRDELAY` - Delay in seconds between start command and screen check to ensure server is running - [Default 5]
-* `SIGDELAY` - Delay in seconds between container receiving shutdown command and script exiting, giving server time to save the world - [Default 2]
+* `SIGDELAY` - Delay in seconds between container receiving shutdown command and script exiting - [Default 2]
 
 ## Additional Features
 
