@@ -20,7 +20,7 @@ Github Repository<br/>
 ## Important Notes
 > [!NOTE]
 > Updating from 1.0.0 to 1.1.0<br/>
-> Ensure you update your /config volume to the new /data volume<br/>
+> Ensure you update your /data volume to the new /data volume<br/>
 > Script will copy over existing data if it exists to the proper folders.
 
 ## Usage (Interactive Mode)
@@ -40,14 +40,14 @@ docker run --rm -it \
 ```
 
 After the initial world generation you can declare the world by specifying the path to the .wld file within the WORLD environment variable.<br/>
-Remember to set your settings in the serverconfig.txt located within the /config directory.
+Remember to set your settings in the serverconfig.txt located within the /data directory.
 
 > [!CAUTION]
 > Do not run your server in interactive mode, only use the interactive mode to create your world.<br/>
 > Running your server interactively disables the autosave on shutdown functionality. You have been warned!
 
 ## Usage (Non-Interactive Mode/Daemon Mode)
-Logs & worlds are stored within the /config directory
+Logs & worlds are stored within the /data directory
 ```
 docker run --rm \
     -p 7777:7777 \
@@ -97,7 +97,7 @@ services:
 * `TYPE` - Server type to run, vanilla or tshock - [Default vanilla]
 * `VERSION` - Vanilla server version to run - latest or [Version](https://terraria.wiki.gg/wiki/Server#Downloads) - [Default latest]
 * `TSVERSION` - TShock server version to run - Only active with TYPE=tshock - latest or [Version](https://github.com/Pryaxis/TShock/releases) - [Default latest]
-* `WORLD` - World file name as located within /config - [Default none]
+* `WORLD` - World file name as located within /data - [Default none]
 * `MAXPLAYERS` - Maximum amount of players allowed on the server - [Default 8]
 * `AUTOCREATE` - Size of world to autocreate if world as specified through WORLD does not exist, 1-Small 2-Medium 3-Large - [Default 2]
 * `SERVER_PORT` - Port to run the server on - [Default 7777]
@@ -110,7 +110,7 @@ services:
 ## Additional Features
 
 ### Autosave on exit functionality
-When container detects shutdown it will send an `exit` command to the server.<br/>
+When the container detects a shutdown event it will send an `exit` command to the server.<br/>
 This will save the world before shutting down the container.
 
 ### Addtional command-line arguments
